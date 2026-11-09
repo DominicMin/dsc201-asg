@@ -165,6 +165,7 @@ Several exact matches required the benchmark's own conventions, which the projec
 | Model B adds history known at the end of the baseline year: missed years, late renewals (gaps over 430 days), county moves, and the type and quarter of the last record that year | Model A, on the base predictors, is near chance. Each feature is grouped as 0, 1 or 2+ |
 | Final logistic model: lower training AIC | Set before fitting, without the test year. B is chosen (43,318 against 44,987) |
 | Optimal cut-off: Youden's J on the training data, applied to the test data | At 0.5 almost no vehicle is predicted to leave (misclassification 7.5% while detecting no leavers) |
+| Calibration: test vehicles are split into tenths by predicted probability; each tenth's mean prediction is compared with its observed exit rate | The standard calibration check. An assertion confirms ten distinct means per model |
 
 **Extensions**
 
@@ -239,6 +240,7 @@ The Cox model (hazard ratio 0.92, p ≈ 3 × 10⁻¹¹) and the main logistic te
 - At the Youden cut-off (7.7%), model B catches 40% of leavers with 70% specificity; misclassification is 32%.
 - The strongest term is the last record of the year being a title with no registration after it. Only about 470 vehicles have one, but most of them leave (odds ratio 56). Next come make, late renewals and region. County moves add nothing (p = 0.62).
 - All generalised VIFs are low (adjusted GVIF ≤ 1.66).
+- **Calibration:** both models match the overall exit rate (7.7% and 7.6% predicted against 7.5% observed). Model B's tenths range from 5.6% to 13.4% observed and follow the diagonal except at the top (15.5% predicted against 13.4%). Model A's tenths span only 6.4–8.4% observed, and its top tenth predicts 12.3% against 8.4%.
 - **Why discrimination stays weak:** removing exits that later returned barely changes the AUC (0.563 to 0.555), so label noise is not the cause. The usual causes of leaving (moving out of state, a crash, export) leave no trace in the records beforehand. This is a limit of the data.
 - With history added, the PHEV odds ratio is 0.82 (0.75 to 0.90). The main retention test (age-only adjustment) is unchanged.
 

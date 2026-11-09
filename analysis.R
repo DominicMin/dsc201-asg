@@ -1890,12 +1890,15 @@ vif_logit <- gvif(logit_fit_b)
 out(vif_logit, "14_logistic_gvif.csv")
 
 # Calibration and ROC for both models on the 2023 test baseline.
+# The prediction is a column of d, so mean(pred) is taken within each decile.
 calib <- rbindlist(lapply(c("A", "B"), function(k) {
-  p <- test[[paste0("p_", k)]]
-  test[, .(model = names(models)[startsWith(names(models), k)],
-           mean_predicted = mean(p), observed = mean(exit2), vehicles = .N),
-       keyby = .(decile = cut(rank(p, ties.method = "first"), 10, labels = 1:10))]
+  d <- data.table(pred = test[[paste0("p_", k)]], exit2 = test$exit2)
+  d[, .(model = names(models)[startsWith(names(models), k)],
+        mean_predicted = mean(pred), observed = mean(exit2), vehicles = .N),
+    keyby = .(decile = cut(rank(pred, ties.method = "first"), 10, labels = 1:10))]
 }))
+assert(calib[, uniqueN(mean_predicted), by = model][, all(V1 == 10L)],
+       "calibration: mean prediction is not computed within each decile")
 out(calib, "14_logistic_calibration.csv")
 p <- ggplot(calib, aes(100 * mean_predicted, 100 * observed, colour = model)) +
   geom_abline(colour = INK2, linetype = "dashed") +

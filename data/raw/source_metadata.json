@@ -1,0 +1,474 @@
+{
+  "id" : "rpr4-cgyd",
+  "name" : "Electric Vehicle Title and Registration Activity",
+  "assetType" : "dataset",
+  "attribution" : "Washington State Department of Licensing",
+  "averageRating" : 0,
+  "category" : "Transportation",
+  "createdAt" : 1555535009,
+  "description" : "This shows records of title activity (transactions recording changes of ownership) and registration activity (transactions authorizing vehicles to be used on Washington public roads).",
+  "diciBackend" : false,
+  "displayType" : "table",
+  "downloadCount" : 28210,
+  "hideFromCatalog" : false,
+  "hideFromDataJson" : false,
+  "licenseId" : "ODBL",
+  "locked" : false,
+  "newBackend" : true,
+  "numberOfComments" : 0,
+  "oid" : 39389303,
+  "provenance" : "official",
+  "publicationAppendEnabled" : false,
+  "publicationDate" : 1678818446,
+  "publicationGroup" : 16113954,
+  "publicationStage" : "published",
+  "rowsUpdatedAt" : 1792014183,
+  "rowsUpdatedBy" : "kgaq-6gwr",
+  "tableId" : 19089458,
+  "totalTimesRated" : 0,
+  "viewCount" : 39616,
+  "viewLastModified" : 1792013482,
+  "viewType" : "tabular",
+  "approvals" : [ {
+    "reviewedAt" : 1559861119,
+    "reviewedAutomatically" : true,
+    "state" : "approved",
+    "submissionId" : 5355790,
+    "submissionObject" : "public_audience_request",
+    "submissionOutcome" : "change_audience",
+    "submittedAt" : 1559861119,
+    "targetAudience" : "public",
+    "workflowId" : 2106,
+    "submissionDetails" : {
+      "permissionType" : "READ"
+    },
+    "submissionOutcomeApplication" : {
+      "failureCount" : 0,
+      "status" : "success"
+    },
+    "submitter" : {
+      "id" : "eagg-6py7",
+      "displayName" : "Department of Licensing"
+    }
+  } ],
+  "clientContext" : {
+    "clientContextVariables" : [ ],
+    "inheritedVariables" : { }
+  },
+  "columns" : [ {
+    "id" : 572839386,
+    "name" : "Clean Alternative Fuel Vehicle Type",
+    "dataTypeName" : "text",
+    "description" : "This distinguishes the vehicle as all electric, plug-in hybrid, or compressed natural gas.",
+    "fieldName" : "electric_vehicle_type",
+    "position" : 1,
+    "renderTypeName" : "text",
+    "tableColumnId" : 79392534,
+    "format" : {
+      "align" : "right"
+    }
+  }, {
+    "id" : 572839387,
+    "name" : "VIN (1-10)",
+    "dataTypeName" : "text",
+    "description" : "This represents the first 10 characters of each vehicle's Vehicle Identification Number (VIN).",
+    "fieldName" : "vin_1_10",
+    "position" : 2,
+    "renderTypeName" : "text",
+    "tableColumnId" : 79392544,
+    "format" : { }
+  }, {
+    "id" : 572839388,
+    "name" : "DOL Vehicle ID",
+    "dataTypeName" : "text",
+    "description" : "This is a unique identification number for each vehicle present in this dataset.",
+    "fieldName" : "dol_vehicle_id",
+    "position" : 3,
+    "renderTypeName" : "text",
+    "tableColumnId" : 84103580,
+    "width" : 203,
+    "format" : { }
+  }, {
+    "id" : 572839389,
+    "name" : "Model Year",
+    "dataTypeName" : "number",
+    "description" : "This is the model year of the vehicle as determined by decoding the Vehicle Identification Number (VIN).",
+    "fieldName" : "model_year",
+    "position" : 4,
+    "renderTypeName" : "number",
+    "tableColumnId" : 79392530,
+    "format" : {
+      "noCommas" : "true",
+      "precision" : "0",
+      "align" : "center"
+    }
+  }, {
+    "id" : 572839390,
+    "name" : "Make",
+    "dataTypeName" : "text",
+    "description" : "This is the manufacturer of the vehicle as determined by decoding the Vehicle Identification Number (VIN).",
+    "fieldName" : "make",
+    "position" : 5,
+    "renderTypeName" : "text",
+    "tableColumnId" : 79392541,
+    "format" : { }
+  }, {
+    "id" : 572839391,
+    "name" : "Model",
+    "dataTypeName" : "text",
+    "description" : "This is the model of the vehicle as determined by decoding the Vehicle Identification Number (VIN).",
+    "fieldName" : "model",
+    "position" : 6,
+    "renderTypeName" : "text",
+    "tableColumnId" : 79392540,
+    "format" : { }
+  }, {
+    "id" : 572839392,
+    "name" : "Primary Use",
+    "dataTypeName" : "text",
+    "description" : "This describes the intended use as defined by WAC 308-96A-099. This is sometimes referred to as ‘use class’.",
+    "fieldName" : "vehicle_primary_use",
+    "position" : 7,
+    "renderTypeName" : "text",
+    "tableColumnId" : 82014247,
+    "format" : { }
+  }, {
+    "id" : 572839394,
+    "name" : "Electric Range",
+    "dataTypeName" : "number",
+    "description" : "This tells how far a vehicle can travel purely on its electric charge.",
+    "fieldName" : "electric_range",
+    "position" : 9,
+    "renderTypeName" : "number",
+    "tableColumnId" : 79392538,
+    "format" : {
+      "align" : "right"
+    }
+  }, {
+    "id" : 572839395,
+    "name" : "Odometer Reading",
+    "dataTypeName" : "number",
+    "description" : "This is the odometer value provided by the vehicle owner at the time of the title transaction. You should consider the 'Odometer Reading Description' when reviewing this field.",
+    "fieldName" : "odometer_reading",
+    "position" : 10,
+    "renderTypeName" : "number",
+    "tableColumnId" : 125281361,
+    "format" : { }
+  }, {
+    "id" : 572839396,
+    "name" : "Odometer Reading Description",
+    "dataTypeName" : "text",
+    "description" : "This is the description of the odometer reading that was recorded at the time the transaction occurred. This value is associated with the 'Odometer Reading' field.",
+    "fieldName" : "odometer_code",
+    "position" : 11,
+    "renderTypeName" : "text",
+    "tableColumnId" : 125281362,
+    "format" : { }
+  }, {
+    "id" : 572839397,
+    "name" : "New or Used Vehicle",
+    "dataTypeName" : "text",
+    "description" : "A vehicle is considered 'New' if it is being sold by the manufacturer to the first owner. Otherwise it is considered 'Used'.",
+    "fieldName" : "new_or_used_vehicle",
+    "position" : 12,
+    "renderTypeName" : "text",
+    "tableColumnId" : 79392529,
+    "format" : {
+      "align" : "center"
+    }
+  }, {
+    "id" : 572839398,
+    "name" : "Sale Price",
+    "dataTypeName" : "number",
+    "description" : "This is the amount that was reported to have been paid for a vehicle. A value of zero indicates that the sale price was not available.",
+    "fieldName" : "sale_price",
+    "position" : 13,
+    "renderTypeName" : "number",
+    "tableColumnId" : 79392524,
+    "format" : {
+      "precisionStyle" : "currency",
+      "precision" : "0",
+      "align" : "right"
+    }
+  }, {
+    "id" : 572839399,
+    "name" : "Sale Date",
+    "dataTypeName" : "calendar_date",
+    "description" : "This is the day on which the vehicle changed ownership.",
+    "fieldName" : "date_of_vehicle_sale",
+    "position" : 14,
+    "renderTypeName" : "calendar_date",
+    "tableColumnId" : 82014250,
+    "format" : {
+      "view" : "date_monthdy"
+    }
+  }, {
+    "id" : 572839401,
+    "name" : "Transaction Type",
+    "dataTypeName" : "text",
+    "description" : "This is the category of activity that was performed as defined by Department of Licensing.",
+    "fieldName" : "transaction_type",
+    "position" : 16,
+    "renderTypeName" : "text",
+    "tableColumnId" : 79392531,
+    "format" : {
+      "align" : "center"
+    }
+  }, {
+    "id" : 572839402,
+    "name" : "Transaction Date",
+    "dataTypeName" : "calendar_date",
+    "description" : "This is the month, day, and/or year the activity took place.",
+    "fieldName" : "transaction_date",
+    "position" : 17,
+    "renderTypeName" : "calendar_date",
+    "tableColumnId" : 79392526,
+    "format" : {
+      "view" : "date_monthdy",
+      "align" : "right"
+    }
+  }, {
+    "id" : 572839403,
+    "name" : "Year",
+    "dataTypeName" : "number",
+    "description" : "This describes the 12 month period, beginning with January and ending with December, that the activity or status occurred within.",
+    "fieldName" : "transaction_year",
+    "position" : 18,
+    "renderTypeName" : "number",
+    "tableColumnId" : 79392525,
+    "format" : {
+      "precisionStyle" : "standard",
+      "noCommas" : "true",
+      "precision" : "0",
+      "align" : "center"
+    }
+  }, {
+    "id" : 572839406,
+    "name" : "County",
+    "dataTypeName" : "text",
+    "description" : "This is the geographic region of the state associated with the record. These addresses may be located in other states.",
+    "fieldName" : "county",
+    "position" : 21,
+    "renderTypeName" : "text",
+    "tableColumnId" : 79392543,
+    "format" : { }
+  }, {
+    "id" : 572839407,
+    "name" : "City",
+    "dataTypeName" : "text",
+    "description" : "This is the city in which the registered owner resides. Vehicles registered in Washington state may be located in other states.",
+    "fieldName" : "city",
+    "position" : 22,
+    "renderTypeName" : "text",
+    "tableColumnId" : 79392542,
+    "format" : { }
+  }, {
+    "id" : 572839408,
+    "name" : "State",
+    "dataTypeName" : "text",
+    "description" : "This is the geographic region of the country associated with the record. These addresses may be located in other states.",
+    "fieldName" : "state_of_residence",
+    "position" : 23,
+    "renderTypeName" : "text",
+    "tableColumnId" : 82014248,
+    "format" : { }
+  }, {
+    "id" : 572839409,
+    "name" : "Postal Code",
+    "dataTypeName" : "text",
+    "description" : "This is the 5 digit number that the United States Postal Service (USPS) uses to route mail to the associated address.",
+    "fieldName" : "zip",
+    "position" : 24,
+    "renderTypeName" : "text",
+    "tableColumnId" : 79392536,
+    "format" : {
+      "align" : "center"
+    }
+  }, {
+    "id" : 572839411,
+    "name" : "2019 HB 2042: Clean Alternative Fuel Vehicle (CAFV) Eligibility",
+    "dataTypeName" : "text",
+    "description" : "This shows if vehicle title transactions were eligible for the sales tax exemption authorized by House Bill (HB) 2042 during the 2019 Legislative Session. If not eligible, reasons are provided.",
+    "fieldName" : "hb_2042_clean_alternative_fuel_vehicle_cafv_eligibility",
+    "position" : 26,
+    "renderTypeName" : "text",
+    "tableColumnId" : 90457778,
+    "width" : 343,
+    "format" : { }
+  }, {
+    "id" : 572839412,
+    "name" : "Meets 2019 HB 2042 Electric Range Requirement",
+    "dataTypeName" : "checkbox",
+    "description" : "This shows if the vehicle meets the electric range requirement authorized by House Bill (HB) 2042 during the 2019 Legislative Session. This field displays 'True' if the vehicle model can travel 30 miles or more solely on electricity. Otherwise, 'False' will be displayed.",
+    "fieldName" : "meets_2019_hb_2042_electric_range_requirement",
+    "position" : 27,
+    "renderTypeName" : "checkbox",
+    "tableColumnId" : 90457776,
+    "width" : 418,
+    "format" : { }
+  }, {
+    "id" : 572839413,
+    "name" : "Meets 2019 HB 2042 Sale Date Requirement",
+    "dataTypeName" : "checkbox",
+    "description" : "This shows if the vehicle meets the sale date requirement authorized by House Bill (HB) 2042 during the 2019 Legislative Session. The field displays 'True' if the vehicle was sold between August 1, 2019 and July 31, 2025. Otherwise, 'False' will be displayed.",
+    "fieldName" : "meets_2019_hb_2042_sale_date_requirement",
+    "position" : 28,
+    "renderTypeName" : "checkbox",
+    "tableColumnId" : 90457777,
+    "format" : { }
+  }, {
+    "id" : 572839414,
+    "name" : "Meets 2019 HB 2042 Sale Price/Value Requirement",
+    "dataTypeName" : "checkbox",
+    "description" : "This shows if the vehicle meets the sale price/value requirement authorized by House Bill (HB) 2042 during the 2019 Legislative Session. The field displays 'True' if the vehicle sale price/value was $45,000 or less for new vehicles, or $30,000 or less for used vehicles. Otherwise, 'False' will be displayed.",
+    "fieldName" : "meets_2019_hb_2042_sale_price_value_requirement",
+    "position" : 29,
+    "renderTypeName" : "checkbox",
+    "tableColumnId" : 90457775,
+    "format" : { }
+  }, {
+    "id" : 572839424,
+    "name" : "2019 HB 2042: Battery Range Requirement",
+    "dataTypeName" : "text",
+    "description" : "This field displays ‘Meets battery range requirement’ if the vehicle model can travel 30 miles or more solely on electricity. Otherwise, it will display the reason why the requirement is not met.",
+    "fieldName" : "_2019_hb_2042_battery_range_requirement",
+    "position" : 30,
+    "renderTypeName" : "text",
+    "tableColumnId" : 146088151,
+    "format" : { }
+  }, {
+    "id" : 572839422,
+    "name" : "2019 HB 2042: Purchase Date Requirement",
+    "dataTypeName" : "text",
+    "description" : "This field displays ‘Meets purchase date requirement’ for title transactions for vehicles between August 1, 2019 and July 31, 2025. Otherwise, it will display the reason why the requirement is not met.",
+    "fieldName" : "_2019_hb_2042_purchase_date_requirement",
+    "position" : 31,
+    "renderTypeName" : "text",
+    "tableColumnId" : 146088149,
+    "format" : { }
+  }, {
+    "id" : 572839423,
+    "name" : "2019 HB 2042: Sale Price/Value Requirement",
+    "dataTypeName" : "text",
+    "description" : "This field displays ‘Meets title transaction requirement’ when the vehicle sale price/value was $45,000 or less for new vehicles, or $30,000 or less for used vehicles. Otherwise, it will display the reason why the requirement is not met.",
+    "fieldName" : "_2019_hb_2042_sale_price_value_requirement",
+    "position" : 32,
+    "renderTypeName" : "text",
+    "tableColumnId" : 146088150,
+    "format" : { }
+  }, {
+    "id" : 572839415,
+    "name" : "Electric Vehicle Fee Paid",
+    "dataTypeName" : "text",
+    "description" : "This fee is charged when qualifying vehicles renew registration. This indicates if it was collected during the transaction.",
+    "fieldName" : "electric_vehicle_fee_paid",
+    "position" : 33,
+    "renderTypeName" : "text",
+    "tableColumnId" : 79392533,
+    "format" : { }
+  }, {
+    "id" : 572839416,
+    "name" : "Transportation Electrification Fee Paid",
+    "dataTypeName" : "text",
+    "description" : "This fee is charged when qualifying vehicles renew registration. This indicates if it was collected during the transaction.",
+    "fieldName" : "transportation_electrification_fee_paid",
+    "position" : 34,
+    "renderTypeName" : "text",
+    "tableColumnId" : 127666925,
+    "format" : { }
+  }, {
+    "id" : 572839417,
+    "name" : "Hybrid Vehicle Electrification Fee Paid",
+    "dataTypeName" : "text",
+    "description" : "This fee is charged when qualifying vehicles renew registration. This indicates if it was collected during the transaction.",
+    "fieldName" : "hybrid_vehicle_electrification_fee_paid",
+    "position" : 35,
+    "renderTypeName" : "text",
+    "tableColumnId" : 127666926,
+    "format" : { }
+  }, {
+    "id" : 572839418,
+    "name" : "2020 GEOID",
+    "dataTypeName" : "text",
+    "description" : "The Geographic Identifier (GEOID) is a combination of the state, county, and census tract codes as assigned by the United States Census Bureau in the 2020 census. This is also known as Census Tract. More information can be found here: https://www.census.gov/programs-surveys/geography/about/glossary.html#par_textimage_13 https://www.census.gov/programs-surveys/geography/guidance/geo-identifiers.html",
+    "fieldName" : "census_tract_2020",
+    "position" : 36,
+    "renderTypeName" : "text",
+    "tableColumnId" : 142655003,
+    "format" : { }
+  }, {
+    "id" : 572839419,
+    "name" : "Legislative District",
+    "dataTypeName" : "text",
+    "description" : "This is the specific section of Washington State that the vehicle's owner resides in, as represented in the state legislature.",
+    "fieldName" : "legislative_district",
+    "position" : 37,
+    "renderTypeName" : "text",
+    "tableColumnId" : 85472373,
+    "format" : { }
+  }, {
+    "id" : 572839420,
+    "name" : "Electric Utility",
+    "dataTypeName" : "text",
+    "description" : "This is the electric power retail service territories serving the address of the registered vehicle. All ownership types for areas in Washington are included: federal, investor owned, municipal, political subdivision, and cooperative. If the address for the registered vehicle falls into an area with overlapping electric power retail service territories then a single pipe | delimits utilities of same TYPE and a double pipe || delimits utilities of different types. We combined vehicle address and Homeland Infrastructure Foundation Level Database (HIFLD) (https://gii.dhs.gov/HIFLD) Retail_Service_Territories feature layer using a geographic information system to assign values for this field. Blanks occur for vehicles with addresses outside of Washington or for addresses falling into areas in Washington not containing a mapped electric power retail service territory in the source data.",
+    "fieldName" : "electric_utility",
+    "position" : 38,
+    "renderTypeName" : "text",
+    "tableColumnId" : 144893745,
+    "format" : { }
+  } ],
+  "grants" : [ {
+    "inherited" : false,
+    "type" : "viewer",
+    "flags" : [ "public" ]
+  } ],
+  "license" : {
+    "name" : "Open Data Commons Open Database License",
+    "termsLink" : "http://opendatacommons.org/licenses/odbl/1.0/"
+  },
+  "metadata" : {
+    "custom_fields" : {
+      "Temporal" : {
+        "Posting Frequency" : "Monthly",
+        "Period of Time" : "Data includes transactions completed January 2010 through September 2026."
+      },
+      "Identification" : {
+        "Originator" : "Research and Analysis Office, Department of Licensing",
+        "Metadata Language" : "English"
+      },
+      "Notes" : {
+        "1. " : "A Battery Electric Vehicle (BEV) is an all-electric vehicle using one or more batteries to store the electrical energy that powers the motor and is charged by plugging the vehicle in to an electric power source. A Plug-in Hybrid Electric Vehicle (PHEV) is a vehicle that uses one or more batteries to power an electric motor; uses another fuel, such as gasoline or diesel, to power an internal combustion engine or other propulsion source; and is charged by plugging the vehicle in to an electric power source. A Hydrogen Powered Vehicle, also known as a fuel cell electric vehicle, is a vehicle that uses a fuel cell to convert hydrogen to electricity to power an electric motor.",
+        "2. " : "We noticed lower numbers for March 2020 - February 2021. This is likely due to a decrease in vehicle activities due to the COVID-19 Pandemic.",
+        "3. " : "Electric Range is no longer maintained for Battery Electric Vehicles (BEV) because new BEVs have an electric range of 30 miles or more. Zero (0) will be entered where the electric range has not been researched.",
+        "4. " : "'2019 HB 2042 Clean Alternative Fuel Vehicle (CAFV) Eligibility' will contain 'HB 2042 Eligibility Requirements not met' or 'Clean Alternative Fuel Vehicle'. The reasons why eligibility requirements were not met were removed from this field. 'Meets 2019 HB 2042 Battery Range Requirement', 'Meets 2019 HB 2042 Purchase Date Requirement', 'Meets 2019 HB 2042 Sale Price/Value Requirement' provide further detail about why eligibility requirements were not met.  The contents of these fields have been modified to make these fields clearer.",
+        "5. " : "As of December 2025, the Base MSRP field will no longer be published."
+      }
+    },
+    "rowLabel" : "Transaction",
+    "availableDisplayTypes" : [ "table", "fatrow", "page" ]
+  },
+  "owner" : {
+    "id" : "eagg-6py7",
+    "displayName" : "Department of Licensing",
+    "profileImageUrlLarge" : "/api/users/eagg-6py7/profile_images/LARGE",
+    "profileImageUrlMedium" : "/api/users/eagg-6py7/profile_images/THUMB",
+    "profileImageUrlSmall" : "/api/users/eagg-6py7/profile_images/TINY",
+    "screenName" : "Department of Licensing",
+    "type" : "interactive",
+    "flags" : [ "acceptedEula", "mayBeStoriesCoOwner" ]
+  },
+  "query" : { },
+  "rights" : [ "read" ],
+  "tableAuthor" : {
+    "id" : "eagg-6py7",
+    "displayName" : "Department of Licensing",
+    "profileImageUrlLarge" : "/api/users/eagg-6py7/profile_images/LARGE",
+    "profileImageUrlMedium" : "/api/users/eagg-6py7/profile_images/THUMB",
+    "profileImageUrlSmall" : "/api/users/eagg-6py7/profile_images/TINY",
+    "screenName" : "Department of Licensing",
+    "type" : "interactive",
+    "flags" : [ "acceptedEula", "mayBeStoriesCoOwner" ]
+  },
+  "tags" : [ "phev", "hybrid", "registrations", "titles", "tesla", "leaf", "nissan", "model 3", "dol", "department of licensing", "green report", "ev", "evs", "phevs", "bev", "bevs", "electric", "hybrids", "vehicle", "vehicles", "plug-in", "plug-ins", "volt", "bolt", "chevy", "chevrolet", "car", "cars", "environment", "clean energy", "energy", "population", "nhtsa", "rao_open_data", "dol_open_data", "electric vehicle", "rao_ev", "rao_veh" ],
+  "flags" : [ "default", "ownerMayBeContacted", "restorable", "restorePossibleForType" ]
+}

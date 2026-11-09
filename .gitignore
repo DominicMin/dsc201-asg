@@ -1,0 +1,13 @@
+# Raw extract (933 MB, over GitHub's 100 MB limit). Shared separately;
+# analysis.R checks its SHA-256 before running.
+data/raw/Electric_Vehicle_Title_and_Registration_Activity.csv
+*.zip
+
+# R and RStudio
+.Rproj.user/
+.Rhistory
+.RData
+.Ruserdata
+
+# Office lock files
+~$*

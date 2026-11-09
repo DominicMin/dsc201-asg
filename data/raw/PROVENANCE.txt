@@ -1,0 +1,22 @@
+Electric_Vehicle_Title_and_Registration_Activity.csv
+  Source: https://data.wa.gov/api/views/rpr4-cgyd/rows.csv?accessType=DOWNLOAD
+  Publisher: Washington State Department of Licensing. Licence: ODbL.
+  Downloaded: 2026-11-07, started 10:38:55 UTC. Source last updated 2026-10-14.
+  Size: 933,780,051 bytes. Rows: 1,926,507. Columns: 33.
+  SHA-256: bab70a0914c3f721c6365015adc461a2f8f76c85ae6035ccad750be74f59943b
+
+cpi_CUUR0000SA0_2008_2017.json and cpi_CUUR0000SA0_2018_2026.json
+  Source: POST https://api.bls.gov/publicAPI/v1/timeseries/data/ with explicit start and end years.
+  Series: CPI-U, all items, US city average, not seasonally adjusted. Downloaded 2026-11-07.
+
+source_metadata.json
+  Source: https://data.wa.gov/api/views/rpr4-cgyd.json (column descriptions). Downloaded 2026-11-07.
+
+County population (extension 2), downloaded 2026-11-09T06:52:16Z with a generic User-Agent:
+  US Census Bureau, Population Estimates Program, county totals (public domain).
+  census_co-est2025-alldata.csv  (Vintage 2025, July 1 estimates 2020-2025)
+    https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/counties/totals/co-est2025-alldata.csv
+    2,071,735 bytes, SHA-256 4f5a499d851e2cb48fd7a5405e5a9235453a8a66933657aacd10df0e264f35d5
+  census_co-est2020-alldata.csv  (Vintage 2020, July 1 estimates 2010-2020)
+    https://www2.census.gov/programs-surveys/popest/datasets/2010-2020/counties/totals/co-est2020-alldata.csv
+    4,012,355 bytes, SHA-256 983708e1b68c8e7c4ecbef4d45137bea34ee286abe07662ccc0d6dfc6411fe83

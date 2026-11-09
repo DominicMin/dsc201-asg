@@ -1,0 +1,614 @@
+county,year,vehicles,bev
+King,2010,60,58
+Kitsap,2010,4,4
+Pierce,2010,3,3
+Snohomish,2010,3,3
+Whatcom,2010,2,2
+Thurston,2010,2,2
+Clark,2010,1,1
+San Juan,2010,1,1
+Skagit,2010,1,1
+Spokane,2010,1,1
+Clallam,2010,1,1
+Chelan,2010,1,1
+King,2011,758,679
+Snohomish,2011,104,98
+Kitsap,2011,50,47
+Pierce,2011,48,41
+Clark,2011,47,35
+Thurston,2011,36,32
+Spokane,2011,33,29
+Whatcom,2011,19,17
+Skagit,2011,14,13
+Benton,2011,10,6
+San Juan,2011,9,6
+Island,2011,6,4
+Jefferson,2011,6,6
+Lewis,2011,5,2
+Yakima,2011,5,2
+Douglas,2011,4,4
+Clallam,2011,4,4
+Chelan,2011,3,3
+Cowlitz,2011,3,3
+Grays Harbor,2011,3,3
+Okanogan,2011,2,1
+Walla Walla,2011,1,1
+Stevens,2011,1,0
+Kittitas,2011,1,1
+Whitman,2011,1,1
+Grant,2011,1,0
+Mason,2011,1,1
+Skamania,2011,1,1
+Klickitat,2011,1,1
+King,2012,1648,1140
+Snohomish,2012,283,182
+Pierce,2012,209,99
+Clark,2012,160,82
+Kitsap,2012,131,83
+Thurston,2012,93,57
+Spokane,2012,79,44
+Whatcom,2012,58,38
+Benton,2012,36,17
+Skagit,2012,31,21
+Island,2012,23,5
+Clallam,2012,23,6
+San Juan,2012,17,10
+Jefferson,2012,15,11
+Chelan,2012,15,12
+Mason,2012,14,4
+Cowlitz,2012,14,7
+Yakima,2012,12,3
+Lewis,2012,10,3
+Stevens,2012,10,2
+Grays Harbor,2012,9,7
+Klickitat,2012,8,2
+Grant,2012,7,0
+Walla Walla,2012,6,0
+Douglas,2012,6,3
+Kittitas,2012,4,2
+Okanogan,2012,3,1
+Franklin,2012,3,0
+Asotin,2012,1,0
+Lincoln,2012,1,0
+Adams,2012,1,0
+Whitman,2012,1,1
+Skamania,2012,1,1
+King,2013,4223,3173
+Snohomish,2013,776,536
+Pierce,2013,602,373
+Clark,2013,397,253
+Kitsap,2013,354,258
+Thurston,2013,251,157
+Whatcom,2013,161,121
+Spokane,2013,154,88
+Skagit,2013,64,33
+Island,2013,63,28
+Benton,2013,63,28
+Clallam,2013,48,24
+Jefferson,2013,44,32
+Mason,2013,42,25
+Cowlitz,2013,40,22
+San Juan,2013,32,20
+Yakima,2013,23,8
+Chelan,2013,23,14
+Lewis,2013,22,9
+Walla Walla,2013,21,7
+Grays Harbor,2013,19,11
+Franklin,2013,17,7
+Klickitat,2013,13,6
+Grant,2013,13,2
+Douglas,2013,13,9
+Stevens,2013,12,2
+Whitman,2013,11,3
+Kittitas,2013,8,5
+Okanogan,2013,6,0
+Skamania,2013,5,4
+Pacific,2013,3,2
+Asotin,2013,1,0
+Lincoln,2013,1,0
+Columbia,2013,1,0
+Ferry,2013,1,1
+Adams,2013,1,0
+King,2014,6600,4919
+Snohomish,2014,1281,880
+Pierce,2014,936,569
+Clark,2014,623,396
+Kitsap,2014,516,387
+Thurston,2014,395,232
+Spokane,2014,244,138
+Whatcom,2014,242,184
+Island,2014,113,47
+Skagit,2014,104,52
+Benton,2014,103,51
+Clallam,2014,79,36
+Jefferson,2014,75,50
+Mason,2014,68,32
+Cowlitz,2014,62,37
+San Juan,2014,55,38
+Lewis,2014,40,24
+Chelan,2014,40,22
+Yakima,2014,38,8
+Franklin,2014,25,13
+Klickitat,2014,24,14
+Douglas,2014,23,16
+Grant,2014,22,7
+Walla Walla,2014,20,7
+Grays Harbor,2014,20,12
+Stevens,2014,17,5
+Whitman,2014,16,6
+Kittitas,2014,12,7
+Skamania,2014,7,4
+Okanogan,2014,7,0
+Pacific,2014,5,4
+Asotin,2014,4,2
+Columbia,2014,1,0
+Ferry,2014,1,1
+Adams,2014,1,0
+Lincoln,2014,1,0
+Wahkiakum,2014,1,0
+King,2015,8925,6657
+Snohomish,2015,1690,1163
+Pierce,2015,1205,701
+Clark,2015,785,507
+Kitsap,2015,600,446
+Thurston,2015,468,271
+Whatcom,2015,357,282
+Spokane,2015,325,187
+Benton,2015,171,93
+Island,2015,159,74
+Skagit,2015,132,75
+Clallam,2015,97,52
+Jefferson,2015,96,63
+Mason,2015,81,35
+San Juan,2015,74,55
+Cowlitz,2015,74,43
+Chelan,2015,66,39
+Yakima,2015,51,16
+Lewis,2015,51,32
+Franklin,2015,42,22
+Douglas,2015,36,23
+Grays Harbor,2015,30,16
+Klickitat,2015,30,15
+Walla Walla,2015,26,13
+Grant,2015,23,7
+Stevens,2015,22,7
+Whitman,2015,21,6
+Kittitas,2015,16,9
+Skamania,2015,9,6
+Okanogan,2015,8,0
+Pacific,2015,7,4
+Asotin,2015,5,3
+Lincoln,2015,4,1
+Ferry,2015,3,2
+Adams,2015,3,1
+Columbia,2015,1,0
+Pend Oreille,2015,1,1
+Wahkiakum,2015,1,0
+King,2016,11996,8495
+Snohomish,2016,2244,1480
+Pierce,2016,1524,795
+Clark,2016,1039,637
+Kitsap,2016,794,540
+Thurston,2016,611,328
+Whatcom,2016,499,368
+Spokane,2016,413,224
+Benton,2016,252,130
+Island,2016,214,101
+Skagit,2016,178,100
+Jefferson,2016,133,83
+Clallam,2016,127,72
+San Juan,2016,107,77
+Mason,2016,102,48
+Cowlitz,2016,93,50
+Yakima,2016,81,34
+Chelan,2016,76,49
+Lewis,2016,71,40
+Franklin,2016,68,26
+Grays Harbor,2016,52,28
+Douglas,2016,44,27
+Klickitat,2016,40,19
+Grant,2016,37,16
+Walla Walla,2016,35,15
+Kittitas,2016,27,13
+Whitman,2016,27,9
+Stevens,2016,26,7
+Okanogan,2016,16,1
+Skamania,2016,13,7
+Pacific,2016,10,5
+Asotin,2016,7,4
+Lincoln,2016,6,2
+Pend Oreille,2016,4,1
+Ferry,2016,3,2
+Adams,2016,2,1
+Columbia,2016,1,0
+Wahkiakum,2016,1,0
+King,2017,15907,11254
+Snohomish,2017,3065,2018
+Pierce,2017,2041,1083
+Clark,2017,1418,843
+Kitsap,2017,1068,695
+Thurston,2017,881,491
+Whatcom,2017,763,538
+Spokane,2017,555,307
+Benton,2017,335,171
+Island,2017,323,152
+Skagit,2017,306,170
+Jefferson,2017,197,123
+Clallam,2017,190,98
+San Juan,2017,181,138
+Mason,2017,138,64
+Yakima,2017,130,57
+Chelan,2017,122,85
+Cowlitz,2017,120,54
+Lewis,2017,94,53
+Grays Harbor,2017,84,40
+Franklin,2017,82,29
+Douglas,2017,69,39
+Kittitas,2017,61,35
+Walla Walla,2017,61,30
+Grant,2017,61,25
+Klickitat,2017,51,25
+Whitman,2017,39,17
+Stevens,2017,31,10
+Pacific,2017,28,15
+Okanogan,2017,22,5
+Skamania,2017,15,10
+Asotin,2017,12,8
+Adams,2017,9,4
+Lincoln,2017,8,2
+Pend Oreille,2017,7,3
+Ferry,2017,5,2
+Columbia,2017,3,2
+Wahkiakum,2017,2,0
+Garfield,2017,1,1
+King,2018,22712,16233
+Snohomish,2018,4336,2921
+Pierce,2018,2859,1504
+Clark,2018,2065,1238
+Kitsap,2018,1479,943
+Thurston,2018,1307,743
+Whatcom,2018,1110,748
+Spokane,2018,810,446
+Island,2018,502,272
+Benton,2018,456,225
+Skagit,2018,448,259
+Clallam,2018,273,149
+Jefferson,2018,267,160
+San Juan,2018,245,178
+Mason,2018,212,108
+Chelan,2018,199,137
+Yakima,2018,180,82
+Cowlitz,2018,168,75
+Lewis,2018,166,88
+Grays Harbor,2018,132,62
+Franklin,2018,115,48
+Kittitas,2018,102,65
+Walla Walla,2018,93,41
+Grant,2018,87,33
+Douglas,2018,84,49
+Whitman,2018,61,23
+Klickitat,2018,60,29
+Pacific,2018,44,21
+Stevens,2018,44,17
+Okanogan,2018,38,16
+Skamania,2018,30,17
+Asotin,2018,21,12
+Pend Oreille,2018,10,5
+Adams,2018,10,4
+Lincoln,2018,7,2
+Ferry,2018,5,3
+Columbia,2018,4,2
+Wahkiakum,2018,3,1
+Garfield,2018,2,1
+King,2019,29067,21680
+Snohomish,2019,5692,4002
+Pierce,2019,3740,2106
+Clark,2019,2827,1808
+Kitsap,2019,1835,1193
+Thurston,2019,1734,1046
+Whatcom,2019,1429,965
+Spokane,2019,1100,639
+Island,2019,621,371
+Benton,2019,609,313
+Skagit,2019,580,366
+Clallam,2019,347,196
+Jefferson,2019,338,208
+San Juan,2019,324,249
+Chelan,2019,275,197
+Mason,2019,266,137
+Yakima,2019,230,115
+Cowlitz,2019,223,118
+Lewis,2019,206,103
+Grays Harbor,2019,199,104
+Kittitas,2019,128,85
+Franklin,2019,126,53
+Grant,2019,121,53
+Walla Walla,2019,120,63
+Douglas,2019,102,66
+Whitman,2019,87,41
+Klickitat,2019,80,44
+Stevens,2019,60,29
+Pacific,2019,60,30
+Okanogan,2019,57,31
+Skamania,2019,45,28
+Asotin,2019,23,13
+Pend Oreille,2019,14,7
+Lincoln,2019,13,1
+Adams,2019,11,6
+Wahkiakum,2019,7,4
+Ferry,2019,7,5
+Columbia,2019,6,3
+Garfield,2019,1,0
+King,2020,34623,26530
+Snohomish,2020,6786,4957
+Pierce,2020,4576,2822
+Clark,2020,3473,2315
+Kitsap,2020,2275,1530
+Thurston,2020,2071,1304
+Whatcom,2020,1747,1203
+Spokane,2020,1421,882
+Benton,2020,787,431
+Island,2020,782,496
+Skagit,2020,724,492
+San Juan,2020,473,359
+Clallam,2020,445,271
+Jefferson,2020,433,281
+Chelan,2020,356,271
+Cowlitz,2020,304,180
+Mason,2020,297,168
+Yakima,2020,295,170
+Grays Harbor,2020,244,123
+Lewis,2020,239,119
+Kittitas,2020,167,118
+Walla Walla,2020,165,99
+Grant,2020,161,80
+Franklin,2020,157,78
+Douglas,2020,128,84
+Klickitat,2020,100,59
+Whitman,2020,98,50
+Okanogan,2020,89,52
+Stevens,2020,75,37
+Pacific,2020,68,33
+Skamania,2020,51,31
+Asotin,2020,30,16
+Lincoln,2020,18,5
+Adams,2020,17,9
+Pend Oreille,2020,14,10
+Wahkiakum,2020,13,6
+Ferry,2020,12,9
+Columbia,2020,8,5
+Garfield,2020,2,0
+King,2021,45244,35080
+Snohomish,2021,9153,6930
+Pierce,2021,6359,4226
+Clark,2021,4962,3408
+Kitsap,2021,3046,2102
+Thurston,2021,2784,1841
+Whatcom,2021,2290,1628
+Spokane,2021,2061,1305
+Benton,2021,1068,636
+Island,2021,1038,700
+Skagit,2021,996,696
+San Juan,2021,615,467
+Clallam,2021,611,373
+Jefferson,2021,572,379
+Chelan,2021,509,395
+Yakima,2021,451,285
+Cowlitz,2021,436,271
+Mason,2021,418,262
+Lewis,2021,369,204
+Grays Harbor,2021,338,185
+Kittitas,2021,273,202
+Franklin,2021,268,165
+Grant,2021,231,135
+Walla Walla,2021,227,141
+Douglas,2021,169,109
+Klickitat,2021,137,84
+Whitman,2021,129,72
+Pacific,2021,112,50
+Okanogan,2021,102,61
+Skamania,2021,101,60
+Stevens,2021,98,54
+Asotin,2021,36,19
+Adams,2021,29,16
+Wahkiakum,2021,27,16
+Pend Oreille,2021,27,18
+Lincoln,2021,24,7
+Ferry,2021,19,15
+Columbia,2021,8,6
+Garfield,2021,3,0
+King,2022,60384,48209
+Snohomish,2022,12935,10205
+Pierce,2022,8813,6307
+Clark,2022,6908,4892
+Kitsap,2022,3958,2802
+Thurston,2022,3752,2635
+Spokane,2022,2913,1952
+Whatcom,2022,2901,2099
+Benton,2022,1430,932
+Island,2022,1307,917
+Skagit,2022,1273,916
+Clallam,2022,754,489
+San Juan,2022,726,555
+Jefferson,2022,698,478
+Chelan,2022,667,528
+Yakima,2022,649,426
+Cowlitz,2022,592,408
+Mason,2022,556,371
+Lewis,2022,448,265
+Grays Harbor,2022,407,247
+Kittitas,2022,404,307
+Franklin,2022,381,259
+Grant,2022,345,232
+Walla Walla,2022,311,202
+Douglas,2022,228,167
+Klickitat,2022,178,125
+Whitman,2022,177,111
+Pacific,2022,155,77
+Okanogan,2022,150,97
+Stevens,2022,150,92
+Skamania,2022,138,86
+Asotin,2022,46,28
+Wahkiakum,2022,38,25
+Adams,2022,35,24
+Pend Oreille,2022,33,21
+Lincoln,2022,29,11
+Ferry,2022,28,23
+Columbia,2022,13,12
+Garfield,2022,4,1
+King,2023,86840,70210
+Snohomish,2023,19824,16270
+Pierce,2023,13069,9857
+Clark,2023,9881,7240
+Kitsap,2023,5540,4046
+Thurston,2023,5212,3838
+Spokane,2023,4379,2935
+Whatcom,2023,4050,3007
+Benton,2023,2065,1421
+Skagit,2023,1847,1368
+Island,2023,1802,1324
+Clallam,2023,1010,690
+Chelan,2023,1010,790
+Yakima,2023,958,658
+Jefferson,2023,957,676
+San Juan,2023,892,701
+Cowlitz,2023,851,594
+Mason,2023,774,557
+Lewis,2023,704,400
+Kittitas,2023,603,481
+Grays Harbor,2023,599,385
+Franklin,2023,547,388
+Grant,2023,531,374
+Walla Walla,2023,405,277
+Douglas,2023,334,253
+Whitman,2023,312,212
+Klickitat,2023,266,189
+Okanogan,2023,243,167
+Stevens,2023,210,140
+Pacific,2023,200,100
+Skamania,2023,192,140
+Asotin,2023,67,41
+Wahkiakum,2023,60,37
+Pend Oreille,2023,57,35
+Lincoln,2023,45,21
+Adams,2023,45,32
+Ferry,2023,27,23
+Columbia,2023,16,16
+Garfield,2023,3,0
+King,2024,114051,92848
+Snohomish,2024,27599,23027
+Pierce,2024,18137,14162
+Clark,2024,13528,10131
+Kitsap,2024,7496,5617
+Thurston,2024,7182,5393
+Spokane,2024,6329,4440
+Whatcom,2024,5467,4101
+Benton,2024,2929,2081
+Skagit,2024,2513,1899
+Island,2024,2389,1785
+Yakima,2024,1448,1045
+Chelan,2024,1353,1058
+Clallam,2024,1341,930
+Jefferson,2024,1174,852
+Cowlitz,2024,1171,854
+San Juan,2024,1097,857
+Mason,2024,1080,781
+Lewis,2024,1013,594
+Grant,2024,836,596
+Kittitas,2024,832,667
+Franklin,2024,830,625
+Grays Harbor,2024,823,557
+Walla Walla,2024,602,403
+Douglas,2024,487,379
+Whitman,2024,438,298
+Klickitat,2024,388,275
+Okanogan,2024,353,245
+Pacific,2024,276,149
+Stevens,2024,270,182
+Skamania,2024,244,178
+Asotin,2024,91,61
+Adams,2024,82,59
+Wahkiakum,2024,79,52
+Pend Oreille,2024,79,58
+Lincoln,2024,69,36
+Ferry,2024,37,32
+Columbia,2024,17,16
+Garfield,2024,3,0
+King,2025,134145,109777
+Snohomish,2025,34218,28782
+Pierce,2025,22337,17462
+Clark,2025,16741,12678
+Kitsap,2025,9099,6967
+Thurston,2025,8728,6657
+Spokane,2025,7652,5461
+Whatcom,2025,6603,4999
+Benton,2025,3840,2851
+Skagit,2025,3166,2458
+Island,2025,2955,2235
+Yakima,2025,1910,1382
+Chelan,2025,1684,1351
+Clallam,2025,1618,1138
+Cowlitz,2025,1433,1084
+Jefferson,2025,1425,1054
+Mason,2025,1400,1057
+Lewis,2025,1245,798
+San Juan,2025,1229,950
+Franklin,2025,1185,929
+Grant,2025,1091,801
+Kittitas,2025,1050,846
+Grays Harbor,2025,1039,736
+Walla Walla,2025,744,507
+Douglas,2025,602,476
+Whitman,2025,533,367
+Klickitat,2025,473,344
+Okanogan,2025,404,287
+Stevens,2025,359,243
+Pacific,2025,340,210
+Skamania,2025,273,209
+Adams,2025,117,90
+Asotin,2025,114,78
+Wahkiakum,2025,96,65
+Pend Oreille,2025,92,68
+Lincoln,2025,80,48
+Ferry,2025,48,36
+Columbia,2025,25,22
+Garfield,2025,5,1
+King,2026,116376,96193
+Snohomish,2026,30924,26134
+Pierce,2026,20466,16110
+Clark,2026,15400,11875
+Kitsap,2026,8442,6532
+Thurston,2026,8061,6193
+Spokane,2026,7293,5362
+Whatcom,2026,6190,4762
+Benton,2026,3733,2869
+Skagit,2026,2892,2279
+Island,2026,2641,2013
+Yakima,2026,1873,1403
+Chelan,2026,1678,1387
+Clallam,2026,1533,1109
+Cowlitz,2026,1397,1085
+Jefferson,2026,1331,1001
+Mason,2026,1305,1007
+Lewis,2026,1191,829
+Franklin,2026,1179,962
+San Juan,2026,1106,855
+Grant,2026,1076,821
+Kittitas,2026,1012,815
+Grays Harbor,2026,1002,710
+Walla Walla,2026,698,497
+Douglas,2026,572,454
+Whitman,2026,523,374
+Klickitat,2026,482,358
+Okanogan,2026,425,305
+Stevens,2026,356,251
+Pacific,2026,335,229
+Skamania,2026,274,220
+Adams,2026,122,97
+Pend Oreille,2026,106,83
+Asotin,2026,102,70
+Wahkiakum,2026,90,63
+Lincoln,2026,86,50
+Ferry,2026,53,37
+Columbia,2026,21,17
+Garfield,2026,6,4

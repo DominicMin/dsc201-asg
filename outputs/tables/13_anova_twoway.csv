@@ -1,0 +1,5 @@
+term,df,sum_sq,mean_sq,f,p,analysis
+size_class,2,0.346178979120065,0.173089489560032,3.45034279471417,0.0435816934380479,Two-way: growth by size class and side
+side,1,0.114939627435808,0.114939627435808,2.29119120033412,0.139629714878013,Two-way: growth by size class and side
+size_class:side,2,0.458196034810893,0.229098017405447,4.56680931723488,0.0177462039383802,Two-way: growth by size class and side
+Residuals,33,1.65547410658199,0.0501658820176362,,,Two-way: growth by size class and side

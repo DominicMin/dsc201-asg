@@ -1,0 +1,7 @@
+# Keep data and outputs byte-identical on every computer: analysis.R checks
+# SHA-256 hashes of the raw files, so line endings must never be converted.
+data/** -text
+outputs/** -text
+*.rds binary
+*.png binary
+*.docx binary

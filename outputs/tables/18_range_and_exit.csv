@@ -1,0 +1,2 @@
+vehicles,exit_rate,or_per_100_miles,ci_low,ci_high,p,note
+45636,0.0745902357787712,0.937382944781572,0.810624505662923,1.0839627707144,0.383020573244972,"BEVs, model year 2020 or earlier, range recorded; adjusted for age band, make and region"

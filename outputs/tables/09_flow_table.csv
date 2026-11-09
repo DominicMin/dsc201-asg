@@ -1,0 +1,9 @@
+step,rows,vehicles,note,rows_removed
+Raw file,1926507,401956,"",
+Remove exact duplicate rows,1926431,401956,"",76
+Remove hydrogen vehicles,1926381,401935,"",50
+Keep Washington addresses with a county,1918148,401256,"",8233
+Remove exempt use classes,1909358,397082,"No annual renewal, so exit can't be measured",8790
+Remove low-speed and off-road classes,1909074,397023,Not general road vehicles,284
+Vehicle-years,1349135,397023,"",
+Vehicle histories,397023,397023,"",

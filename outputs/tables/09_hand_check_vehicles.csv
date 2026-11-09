@@ -1,0 +1,11 @@
+vehicle_id,make,model,model_year,entry_date,entry_route,last_date,years_with_record,missing_years,transfers,county_moves,entry_county,last_county
+110189999,TESLA,Model 3,2018,2018-12-20,New,2025-08-06,4,4,1,2,King,King
+133856530,BMW,i8,2016,2021-01-04,"Used, first Washington title",2024-05-21,4,0,2,1,Pierce,Whatcom
+223640021,TESLA,Model Y,2022,2022-11-15,New,2026-02-18,3,2,0,0,King,King
+224400375,TESLA,Model Y,2022,2022-12-01,"Used, registration only",2025-12-29,3,1,1,0,King,King
+238831463,NISSAN,Leaf,2015,2014-10-06,New,2026-08-31,13,0,2,3,Snohomish,Kitsap
+241707833,NISSAN,Leaf,2013,2013-11-21,New,2015-11-18,2,1,0,0,Pierce,Pierce
+252742794,FORD,Fusion,2016,2018-12-07,"Used, first Washington title",2026-09-29,8,1,2,2,King,Stevens
+282478661,CHEVROLET,Blazer,2025,2025-08-05,New,2026-06-05,2,0,0,0,Pierce,Pierce
+286939985,TESLA,Cybertruck,2025,2025-09-18,New,2025-09-18,1,0,0,0,Snohomish,Snohomish
+5047318,TESLA,Model S,2015,2015-12-30,New,2025-02-03,10,1,3,2,King,Snohomish

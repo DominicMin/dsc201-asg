@@ -1,0 +1,2 @@
+term,hazard_ratio,ci_low,ci_high,p,note
+PHEV vs BEV,0.924057173390375,0.902757329214007,0.945859570520073,3.17847529895289e-11,"Cox model by age, left-truncated, stratified by model-year group"

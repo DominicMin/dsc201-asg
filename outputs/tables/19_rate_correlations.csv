@@ -1,0 +1,4 @@
+pair,method,estimate,p
+"log population 2025 vs EVs per 1,000 in 2025",pearson,0.4368761174475,0.00542290950933184
+"log population 2025 vs EVs per 1,000 in 2025",spearman,0.512348178137652,0.000999375782212281
+"log population 2025 vs EVs per 1,000 in 2025",kendall,0.379217273954116,0.000540769170442657

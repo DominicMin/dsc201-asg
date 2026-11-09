@@ -1,0 +1,7 @@
+rule_stage,vehicles_ever,active_2025,king_share_2025
+After removing duplicates,401956,271965,49.47
+After removing hydrogen,401935,271957,49.47
+After keeping Washington addresses,401256,270909,49.69
+After removing exempt classes,397082,270142,49.66
+After removing low-speed classes (study population),397023,270098,49.67
+Sensitivity: passenger class only,383262,259792,49.94

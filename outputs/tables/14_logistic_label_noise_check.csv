@@ -1,0 +1,3 @@
+check,vehicles,exits,auc_model_a,auc_model_b
+All exits,85340,6359,0.562985091242571,0.61205494771855
+Exits that never returned,84231,5250,0.555282703917338,0.605618192681664

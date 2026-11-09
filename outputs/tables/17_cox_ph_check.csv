@@ -1,0 +1,3 @@
+term,chisq,df,p,note
+ev_type,5.07682412454123,1,0.0242477457984929,Schoenfeld residuals against Kaplan-Meier transformed age
+GLOBAL,5.07682412454123,1,0.0242477457984929,Schoenfeld residuals against Kaplan-Meier transformed age

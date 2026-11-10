@@ -818,8 +818,9 @@ table_png <- function(dt, name, title, note = SOURCE_NOTE) {
     theme(plot.background = element_rect(fill = SURFACE, colour = NA),
           plot.title = element_text(face = "bold", size = 11),
           plot.caption = element_text(colour = INK2, size = 7, hjust = 0), plot.margin = margin(8,
-              8, 8, 8))
-  fig(p, name, w = max(4.5, sum(w) * 0.085), h = 0.9 + 0.24 * (nrow(d) + 1))
+              14, 8, 8))
+  fig(p, name, w = max(4.5, sum(w) * 0.085, nchar(title) * 0.085 + 0.5),
+      h = 0.9 + 0.24 * (nrow(d) + 1))
 }
 
 # 10.1 Regions. Eastern Washington is the 20 counties east of the Cascade crest.
@@ -1600,6 +1601,8 @@ say("13. ANOVA: size class p = %.2g (%s, chosen by the checks); repeated measure
 
 
 # ---- 14. REGRESSION ---------------------------------------------------------
+
+set.seed(20261107)   # section 14 draws samples for diagnostics and the boundary plot
 
 # 14.1 Simple: county log growth on log 2019 stock. Do smaller counties catch up?
 simple_fit <- lm(growth ~ log_stock_2019, data = county_tab)
@@ -2424,7 +2427,8 @@ set.seed(20261107)
 
 # 20.1 Rates. The projection is the stock-and-flow identity checked in section 9.1:
 #   active[t+1] = active[t] * (1 - exit rate[t] + return rate[t]) + entries[t+1]
-# Exit rate: two-year leavers after year t / gap-filled active in t (section 6).
+# Exit rate: fall in gap-filled active from t to t+1 (confirmed as a two-year exit) /
+#   gap-filled active in t (section 6).
 # Return rate: vehicles back in t+1 after a gap / active in t.
 rates <- flows[, .(year, active = active_filled, entries,
                    exit_rate = leavers_after_year / active_filled,

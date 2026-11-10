@@ -17,15 +17,17 @@ That is the Population focus written as four parts: size over time (*grown*), ve
 | `desc.pdf` | The assignment brief and marking rubric |
 | `REPORT_GUIDE.md` | Guide for finishing the report: what is done, what is left, where each rubric item is answered, Q&A preparation |
 | `analysis.R` | The whole analysis, in 21 numbered sections |
-| `outputs/tables/` | 98 CSV tables written by the script (plus `00_session_info.txt`) |
+| `outputs/tables/` | 97 CSV tables written by the script (plus `00_session_info.txt`) |
 | `outputs/figures/` | 41 PNG figures written by the script |
 | `data/processed/` | Vehicle-year, vehicle-history and sale-event tables saved by the script (`.rds`) |
 | `data/raw/` | Small inputs: Census county population, CPI, source metadata and `PROVENANCE.txt`. The main 933 MB CSV is **not** here (see below) |
-| `report/report_draft.docx` | Report starter for the team: figures, numbers and notes under the brief's sections I–IV |
+| `report/report.tex` | Final report source: prose report with abstract and contribution table, TikZ pipeline diagrams, typeset tables and an appendix. Compile with `latexmk -xelatex` in `report/` |
+| `report/report.pdf` | Compiled report (cover, abstract with contribution table, contents, 35 numbered pages) |
+| `report/cover_page.pdf` | Signed cover page and own-work declaration (inserted by `report.tex`) |
 | `DECISIONS.md` | Every cleaning and analysis rule, with its reason, and the results log |
 | `METHODS_NOTES.md` | Plain-language explanation and a reference for each method |
 
-**Writing the report doesn't require running anything.** Every table and figure is already in `outputs/`, and `report/report_draft.docx` says which to use where.
+**Writing the report doesn't require running anything.** Every table and figure is already in `outputs/`, and `report/report.tex` says which to use where. An older bullet-point starter is kept as `report/report_draft.docx`.
 
 ## Getting the data (only needed to re-run the script)
 

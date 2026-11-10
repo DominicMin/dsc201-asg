@@ -4,6 +4,9 @@
 \usepackage{tabularx}
 \usepackage{enumitem}
 \usepackage{chngcntr}
+\usepackage{tikz}
+\usepackage{placeins}
+\usetikzlibrary{arrows.meta,positioning,calc}
 
 \setmainfont{Times New Roman}
 
@@ -16,77 +19,142 @@
 \setlength{\tabcolsep}{6pt}
 \renewcommand{\arraystretch}{1.15}
 
-\captionsetup{font=small,labelfont=bf,labelsep=colon}
+\captionsetup{font=small,labelfont=bf,labelsep=colon,textfont=normalfont}
 \captionsetup[table]{skip=4pt}
+\captionsetup[figure]{skip=4pt}
 
 \counterwithout{figure}{section}
 \counterwithout{table}{section}
 \renewcommand{\thefigure}{\arabic{figure}}
 \renewcommand{\thetable}{\arabic{table}}
-\titleformat{\section}{\fontsize{14}{17}\selectfont\bfseries}{\thesection.}{0.6em}{}
-\titlespacing*{\section}{0pt}{18pt}{8pt}
-\titleformat{\subsection}{\fontsize{14}{17}\selectfont\bfseries}{\thesubsection}{0.6em}{}
-\titlespacing*{\subsection}{0pt}{12pt}{6pt}
 
-\setlist[itemize]{leftmargin=*,itemsep=3pt,topsep=4pt,parsep=0pt}
+\titleformat{\section}{\fontsize{14}{17}\selectfont\bfseries}{\thesection.}{0.6em}{}
+\titlespacing*{\section}{0pt}{18pt}{10pt}
+\titleformat{\subsection}{\fontsize{14}{17}\selectfont\bfseries}{\thesubsection}{0.6em}{}
+\titlespacing*{\subsection}{0pt}{13pt}{6pt}
+
+\setlist[itemize]{leftmargin=*,itemsep=2pt,topsep=2pt,parsep=0pt}
 
 \hypersetup{pdftitle={Washington's Plug-in Vehicle Population, 2010--2026}}
+
+\newcommand{\tabnote}[1]{\par\smallskip{\footnotesize\itshape Source: #1\par}}
+
+\definecolor{mblue}{HTML}{6F8FA8}
+\definecolor{mclay}{HTML}{C08F76}
+\definecolor{mgreen}{HTML}{7FA08A}
+\definecolor{mgold}{HTML}{C3A76B}
+\definecolor{mgray}{HTML}{8E8E8E}
 
 \begin{document}
 
 \includepdf[pages=-]{cover_page.pdf}
 
 \pagestyle{empty}
-\tableofcontents
 \thispagestyle{empty}
-\clearpage
 
+\begin{center}
+{\fontsize{14}{17}\selectfont\bfseries Washington's Plug-in Vehicle Population, 2010--2026\par}
+\vspace{4pt}
+{\normalsize DSC201 Statistical Programming Using R Assignment\par}
+\end{center}
+
+\section*{Abstract}
+
+Washington State's plug-in vehicle population is recorded only as administrative transactions, not as a vehicle register. Using 1,926,507 title and registration records for 401,956 vehicles (January 2010 to September 2026), this report reconstructs the population at the vehicle-year level and asks how it has grown, aged and spread, and which vehicles remain. After cleaning (1,909,074 rows; 397,023 vehicles; 1,349,135 vehicle-years), the stock-and-flow identity reconciles exactly in every year and 66 of 70 independent benchmark figures match exactly or to rounding, with the four differences explained. The active fleet grew from 52,710 vehicles in 2019 to 270,098 in 2025 (5.1 times); mean age rose from 2.58 to 3.05 years; King County's share of vehicles fell 5.5 percentage points; and about 7--7.5\% of active vehicles leave the records within two years. Once age is controlled, battery electric vehicles (BEVs) and plug-in hybrids (PHEVs) leave at statistically indistinguishable rates (odds ratio 1.03, $p = 0.26$). Leaving is associated with prior transfers, use class and region, but is hard to predict (test AUC 0.57), because the reasons for leaving are not recorded. A stock-and-flow projection places the 2028 fleet at about 444,000 vehicles (95\% interval 331,000--714,000). All results are associations rather than causal effects, and exits are observable only to 2023.
+
+\section*{Contribution Table}
+{\small
+\begin{tabularx}{\textwidth}{|l|l|>{\raggedright\arraybackslash}X|}
+\hline
+\textbf{Student ID} & \textbf{Name} & \textbf{Contribution} \\
+\hline
+DSC2409007 & Deng Kailong & Team leader; attended the dataset selection and planning meeting; prepares the presentation slides. \\
+\hline
+DSC2409071 & Mounir Ben Hassine & Selects the dataset and plans the data processing and analysis workflow; Implements the analysis and visualizations. \\
+\hline
+DSC2409006 & Cui Zeyu & Improves the analysis and visualizations; Writes the report draft and draws the figures. \\
+\hline
+DSC2409026 & Min Yiduo & Improves the report; Refines the analysis and visualizations. \\
+\hline
+DSC2409042 & Yu Fangrui & Checks the analysis and report; Revises the final report. \\
+\hline
+DSC2409043 & Yu Mingquan & Checks the analysis and report; Revises the final report. \\
+\hline
+\end{tabularx}
+}
+
+\clearpage
+\tableofcontents
+\clearpage
 \pagestyle{fancy}
 \fancyfoot[C]{Page \thepage\ of \pageref{LastMainPage}}
 \setcounter{page}{1}
-
-\begin{center}
-{\fontsize{14}{17}\selectfont\bfseries Washington's Plug-in Vehicle Population, 2010--2026}
-\end{center}
-
-\textbf{Report starter for the team (delete this paragraph before submission).} Bullets only: each group lists the figures and tables to use, the key numbers, where the code is, and what to interpret. Write the prose in your own words. Cite the code as the brief asks, e.g. ``The code for this finding is in sub-section 13.1 of the R code.'' Every number comes from outputs/tables, and every figure from outputs/figures. Wording rules: say ``associated with'', not ``caused by''; a vehicle ``left the records'' (we can't tell whether it moved out of state or went off the road); a used car arriving from elsewhere has its ``first Washington title as used''.
-
-\begin{itemize}
-  \item \textbf{Research question:} how has Washington's plug-in vehicle population grown, aged and spread from 2010 to 2026, and which vehicles stay in it? Focus: Population, with Vehicle Specification in support.
-\end{itemize}
 
 \section{Context and Data Understanding}
 
 \subsection{The dataset and its context}
 
-\begin{itemize}
-  \item \textbf{Source:} Washington State Department of Licensing, ``Electric Vehicle Title and Registration Activity'', data.wa.gov, dataset ID rpr4-cgyd, licence ODbL. Extract of 7 November 2026 (source updated 14 October 2026); frozen by SHA-256 so results can be reproduced.
-  \item \textbf{Size:} 1,926,507 rows, 33 columns, 401,956 distinct vehicles, January 2010 to September 2026.
-  \item \textbf{Type of data:} administrative transaction records, not a survey. One row = one transaction: original title, transfer title, original registration, renewal, registration at transfer.
-  \item \textbf{Variables (feature groups):} vehicle (VIN prefix, make, model, model year, BEV/PHEV type, electric range); transaction (type, date, sale price, sale date, odometer, New/Used label); location (county, city, postal code, 2020 census tract, legislative district, electric utility); policy fields (2019 HB 2042 tax-exemption eligibility, EV fees paid).
-  \item \textbf{Measurement characteristics to mention:} prices exist only on title rows; a new car's registration row says ``Used'' (worked example in sub-section 2.3); electric range is almost missing for BEVs after model year 2020; the population is not given directly and has to be rebuilt from the transactions.
-  \item \textbf{Supporting data:} US Census Bureau county population estimates (per-resident rates, section 19) and BLS CPI-U (real prices, section 7).
-  \item \textbf{code: sections 1--2 (data dictionary: 2.1; transaction types: 2.5).}
-  \item \textbf{Table to use:} 02\_data\_dictionary.csv (source description and profile of every column) --- summarise it as a short variable table, not all 33 rows.
-\end{itemize}
+The analysis uses the Washington State Department of Licensing's \emph{Electric Vehicle Title and Registration Activity} extract, published on data.wa.gov under the Open Database License. The extract was downloaded on 7 November 2026 (the source was last updated on 14 October 2026) and frozen by its SHA-256 hash, so every number in this report can be reproduced from the same file. It contains 1,926,507 rows and 33 columns describing 401,956 distinct vehicles between January 2010 and September 2026. Each row is one administrative transaction---an original title, a transfer title, an original registration, a registration renewal or a registration at transfer---rather than one vehicle. The dataset is therefore a transaction log, not a survey, and the population of vehicles has to be rebuilt from it.
+
+The fields fall into four groups, summarised in Table~\ref{tab:features}. Vehicle fields describe the car itself (VIN prefix, make, model, model year, BEV or PHEV type and electric range); transaction fields describe the event (type, date, sale price, sale date, odometer and the New/Used label); location fields describe where the vehicle was registered (county, city, postal code, 2020 census tract, legislative district and electric utility); and policy fields record participation in the 2019 HB~2042 sales-tax exemption and the electric vehicle fees paid. Three measurement characteristics matter for the analysis. First, sale prices exist only on title rows, so price statistics use a subset of the records. Second, a new car's registration row is labelled ``Used'' even when the car is new, so entry routes must be taken from title rows rather than from the label. Third, electric range is recorded for only a minority of BEVs after model year 2020, which limits the range analysis to older vehicles. County population estimates from the US Census Bureau and the Consumer Price Index from the Bureau of Labor Statistics are used as supporting data for per-resident rates and real prices.
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Feature groups in the source extract}
+\label{tab:features}
+\begin{tabularx}{\textwidth}{@{}p{2.6cm}X@{}}
+\toprule
+\textbf{Group} & \textbf{Fields} \\
+\midrule
+Vehicle & VIN prefix, make, model, model year, BEV/PHEV type, electric range \\
+Transaction & Transaction type, transaction date, sale price, sale date, odometer, New/Used label \\
+Location & County, city, postal code, 2020 census tract, legislative district, electric utility \\
+Policy & 2019 HB~2042 tax-exemption eligibility, electric vehicle fees paid \\
+\bottomrule
+\end{tabularx}
+\tabnote{data dictionary in \texttt{outputs/tables/02\_data\_dictionary.csv} (section 2.1 of the R script)}
+\end{table}
+
+The import, audit and cleaning steps are in sections 1--3 of the R script, and the full profile of every column is in section 2.1.
 
 \subsection{Indicators that summarise the population}
 
-\begin{itemize}
-  \item \textbf{Derived indicators:} active vehicles per year, entries (first Washington record), exits (no record for two years), returns, vehicle age, BEV share, county share, entry route (new, first Washington title as used, registration only), county moves.
-\end{itemize}
+Because the source records transactions rather than vehicles, the unit of analysis is the vehicle-year: a vehicle is \emph{active} in a year if it has at least one record in that year. The population can also be counted with a one-year gap filled, which treats a vehicle as active when it has records in the years either side of a missing year; this gap-filled count is used wherever a single missing record would otherwise look like an exit. Four flows move the population between years: \emph{entries} (the first Washington record of a vehicle), \emph{returns} (a vehicle that reappears after a two-year absence), \emph{leavers} (a vehicle with no record in the following two years) and county moves. Two further indicators summarise composition: vehicle age (year minus model year, floored at zero) and the BEV share of active vehicles. Figure~\ref{fig:stockflow} shows the accounting identity that links the stock to these flows, and Figure~\ref{fig:active} shows the resulting stock over time.
 
 \begin{figure}[H]
 \centering
+\begin{tikzpicture}[
+  box/.style={draw=mblue!65, fill=mblue!15, rounded corners=2pt, minimum width=4.2cm, minimum height=0.95cm, align=center, font=\small},
+  arr/.style={-{Latex[length=2.2mm]}, semithick, draw=mgray!80}
+]
+\node[box] (t) at (0,0) {Active at end of year $t$};
+\node[box] (tn) at (8.0,0) {Active at end of year $t+1$};
+\draw[arr, draw=mblue!75] (t) -- node[above, font=\footnotesize] {entries in $t+1$} (tn);
+\draw[arr, draw=mgreen!80] (t.north) to[bend left=22] node[above, font=\footnotesize] {returns} (tn.north);
+\draw[arr, draw=mclay!85] (t.south) to[bend right=22] node[below, font=\footnotesize, fill=white, inner sep=1.5pt] {leavers} (tn.south);
+\end{tikzpicture}
+\par\vspace{4pt}
+{\footnotesize\centering
+$\mathrm{Active}_{t+1}=\mathrm{Active}_{t}+\mathrm{entries}_{t+1}+\mathrm{returns}_{t+1}-\mathrm{leavers}_{t}$\\[2pt]
+leavers: no record in $t+1$ or $t+2$; returns: first record after a two-year absence\par}
+\caption{Stock-and-flow identity used for every year. The identity is checked exactly in section 9.1 of the R script.}
+\label{fig:stockflow}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
 \includegraphics[width=6in,height=0.85\textheight,keepaspectratio]{11_01_active_population.png}
-\caption{Active plug-in vehicles per year, simple and gap-filled counts (11\_01\_active\_population.png)}
+\caption{Active plug-in vehicles per year, counted directly and with a one-year gap filled}
+\label{fig:active}
 \end{figure}
 
 \begin{table}[htbp]
 \centering
 \small
 \setlength{\tabcolsep}{5pt}
-\caption{Population stock and flows by year (06\_population\_flows.csv)}
+\caption{Population stock and flows by year}
+\label{tab:flows}
 \begin{tabular}{rrrrrrr}
 \toprule
 \textbf{Year} & \textbf{Active (simple)} & \textbf{Active (gap-filled)} & \textbf{Entries} & \textbf{Leavers after year} & \textbf{BEV \%} & \textbf{Mean age}\\
@@ -110,114 +178,150 @@
 2026 & 242,352 & 242,352 & 49,477 &  & 80.6 & 3.55\\
 \bottomrule
 \end{tabular}
+\tabnote{\texttt{outputs/tables/06\_population\_flows.csv}. 2026 covers January to September. The 2024 and 2025 leaver counts are provisional because later years are partial.}
 \end{table}
 
-\begin{itemize}
-  \item \textbf{Key numbers:} 52,710 active vehicles in 2019 and 270,098 in 2025 (54,733 and 286,478 when a one-year gap is filled). Entries rose from 15,554 (2019) to 60,788 (2023) and about 72,000 a year in 2024--2025. BEV share 69.2\% $\rightarrow$ 79.8\%; mean age 2.58 $\rightarrow$ 3.05 years (2019 $\rightarrow$ 2025).
-  \item \textbf{Interpret:} five-fold growth in six years; the fleet is getting older as well as larger; 2024 and 2025 leaver counts are provisional because later years are partial (say so).
-  \item \textbf{code: sections 4--6 (definitions), 6 (flows table), 11.1 (figure).}
-\end{itemize}
+The fleet grew five-fold in six years, from 52,710 active vehicles in 2019 to 270,098 in 2025 (54,733 and 286,478 on the gap-filled count). Entries rose from 15,554 in 2019 to 60,788 in 2023 and stayed close to 72,000 a year in 2024 and 2025, while the BEV share rose from 69.2\% to 79.8\% and mean age from 2.58 to 3.05 years. The population is therefore becoming larger, older and more battery-electric at the same time. The 2024 and 2025 leaver counts should not be read as final: a vehicle is only classified as a leaver after two further years without a record, and the 2026 data end in September. The definitions and the flow table are produced in sections 4--6 of the R script, and Figure~\ref{fig:active} in section 11.1.
 
 \subsection{Variability, distributions and correlation}
 
-\begin{figure}[H]
+The distribution of vehicle age is right-skewed in every year. In 2025 the mean age was 3.05 years and the median 2 years, with a standard deviation of 3.01, skewness of 1.32 and excess kurtosis of 1.30 (raw kurtosis 4.30): there are many young vehicles and a long tail of older ones. In 2019 the mean was 2.58 years and the standard deviation 2.23. Real used prices, expressed in September 2026 dollars, are more strongly skewed: across 141,854 used sales the mean was \$33,100, the median \$28,099, the standard deviation \$21,551, skewness 1.84 and kurtosis 10.25, so the median is a better summary of a typical sale than the mean. County stocks are more unequal still: in 2025 the mean county held 6,926 vehicles but the median only 1,185, with skewness 5.20, because King County alone held 134,145 vehicles. Table~\ref{tab:descriptives} collects the descriptive statistics, and Figures~\ref{fig:agehist}--\ref{fig:pyramid} show the corresponding distributions.
+
+\begin{table}[htbp]
 \centering
-\includegraphics[width=6in,height=0.85\textheight,keepaspectratio]{10_05_table_descriptives.png}
-\caption{Descriptive statistics: mean, median, mode, variance, SD, skewness, kurtosis (10\_05\_table\_descriptives.png)}
-\end{figure}
+\footnotesize
+\caption{Descriptive statistics for the main continuous measures}
+\label{tab:descriptives}
+\begin{tabular}{@{}lrrrrrrr@{}}
+\toprule
+\textbf{Measure} & \textbf{n} & \textbf{Mean} & \textbf{Median} & \textbf{Mode} & \textbf{SD} & \textbf{Skewness} & \textbf{Kurtosis}\\
+\midrule
+Vehicle age, 2019 (years) & 52,710 & 2.58 & 2 & 1 & 2.23 & 0.79 & 3.46\\
+Vehicle age, 2025 (years) & 270,098 & 3.05 & 2 & 2 & 3.01 & 1.32 & 4.30\\
+Used sale price, real (\$) & 141,854 & 33,100 & 28,099 & 26,000 & 21,551 & 1.84 & 10.25\\
+Odometer at used sale (miles) & 143,527 & 34,300 & 27,111 & 20,000 & 29,007 & 1.85 & 8.70\\
+County stock, 2025 (vehicles) & 39 & 6,926 & 1,185 & --- & 22,001 & 5.20 & 30.27\\
+County log growth, 2019--25 & 39 & 1.80 & 1.79 & 1.8 & 0.26 & 0.98 & 4.39\\
+\bottomrule
+\end{tabular}
+\tabnote{\texttt{outputs/tables/10\_descriptives.csv}. The mode of a continuous measure uses rounded values (years, \$1,000, 1,000 miles, log points); kurtosis is raw, so excess kurtosis is 3 less.}
+\end{table}
 
-\begin{itemize}
-  \item \textbf{Vehicle age, 2025:} mean 3.05, median 2, mode 2 years, SD 3.01, skewness 1.32, excess kurtosis 1.30 (right-skewed: many young cars, a long tail of old ones). 2019: mean 2.58, SD 2.23.
-  \item \textbf{Real used sale price:} mean \$33,100, median \$28,099, SD \$21,551, skewness 1.84, kurtosis 10.3 (141,854 used sales, September 2026 dollars). Use the median as the typical value.
-  \item \textbf{County stock, 2025:} mean 6,926 but median 1,185; skewness 5.2, because King alone has 134,140 vehicles.
-\end{itemize}
-
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=6in,height=0.85\textheight,keepaspectratio]{11_07_age_histogram_2025.png}
-\caption{Distribution of vehicle age, 2025 (11\_07\_age\_histogram\_2025.png)}
+\caption{Distribution of vehicle age in 2025}
+\label{fig:agehist}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=6in,height=0.85\textheight,keepaspectratio]{11_09_age_by_year_boxplot.png}
-\caption{Vehicle age by year (boxplots) (11\_09\_age\_by\_year\_boxplot.png)}
+\caption{Vehicle age by year (boxplots; the orange point is the mean)}
+\label{fig:agebox}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=6in,height=0.85\textheight,keepaspectratio]{11_08_used_price_histogram.png}
-\caption{Distribution of real used sale prices (11\_08\_used\_price\_histogram.png)}
+\caption{Distribution of real used sale prices}
+\label{fig:pricehist}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=6in,height=0.85\textheight,keepaspectratio]{11_12_model_year_pyramid_2025.png}
-\caption{Active vehicles in 2025 by model year and type (11\_12\_model\_year\_pyramid\_2025.png)}
+\caption{Active vehicles in 2025 by model year and type}
+\label{fig:pyramid}
 \end{figure}
 
-\begin{itemize}
-  \item \textbf{Correlation (39 counties):} growth 2019--25 vs log 2019 stock: Pearson r = $-0.31$ (p = 0.058), Spearman $-0.33$, Kendall $-0.22$ --- smaller counties grew slightly faster (weak). Growth vs used share in 2019: r = 0.42 (p = 0.008).
-  \item \textbf{Correlation (used sales):} log real price vs age r = $-0.66$; vs odometer r = $-0.49$; age vs odometer r = 0.69 (older cars have more miles, so the two overlap).
-  \item \textbf{Interpret:} skewed variables $\rightarrow$ report medians and use logs; Pearson and Spearman agree in direction; correlation shows association only.
-  \item \textbf{code: 10.3 (county measures), 10.4 (descriptives: 10\_descriptives.csv), 10.5 (10\_correlations.csv), 11.7--11.9, 11.12.}
-\end{itemize}
+Correlation between county measures is weak but consistent in direction. Growth from 2019 to 2025 is negatively associated with the log of 2019 stock (Pearson $r=-0.31$, $p=0.058$; Spearman $-0.33$; Kendall $-0.22$), with covariance $-0.169$: smaller counties grew slightly faster. Growth is positively associated with the used share of 2019 titles ($r=0.42$, $p=0.008$, covariance $0.010$). Among used sales, the log real price falls with age ($r=-0.66$) and with odometer reading ($r=-0.49$), while age and odometer are themselves strongly related ($r=0.69$); the two therefore carry overlapping information about price. A useful way to read these measures is the standard score: King County sits 2.44 standard deviations above the mean on 2019 log stock but 1.04 below it on growth, which is why its share of the population can fall while its absolute stock rises. Figure~\ref{fig:scatter} shows the county relationship directly. Because the skewed variables are summarised by medians and analysed on log scales, the Pearson and Spearman correlations agree in sign and magnitude. Correlation, however, describes association only. Table~\ref{tab:descriptives} and Figures~\ref{fig:agehist}--\ref{fig:pyramid} come from sections 10.4--10.5 and 11.7--11.12 of the R script, and the scatterplot in Figure~\ref{fig:scatter} from section 11.11.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=6in,height=0.85\textheight,keepaspectratio]{11_11_growth_vs_stock.png}
+\caption{County log growth, 2019--2025, against log 2019 stock, with a least-squares line and 95\% confidence band}
+\label{fig:scatter}
+\end{figure}
 
 \subsection{Which vehicles, and where}
 
-\begin{figure}[H]
+The fleet is dominated by a small number of makes and by BEVs. In 2025 Tesla accounted for 111,984 active vehicles, more than six times the next make (Chevrolet, 18,341), and the ten largest makes covered most of the population; the remaining makes are grouped in Figure~\ref{fig:makes}. BEVs made up 79.8\% of active vehicles and PHEVs 20.2\% (Figure~\ref{fig:typeshare}), continuing the shift towards battery-electric cars seen in Table~\ref{tab:flows}.
+
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=6in,height=0.85\textheight,keepaspectratio]{11_05_top_makes_2025.png}
-\caption{Top makes among active vehicles, 2025 (11\_05\_top\_makes\_2025.png)}
+\caption{Ten largest makes among active vehicles in 2025}
+\label{fig:makes}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=5.2in,height=0.85\textheight,keepaspectratio]{11_06_type_share_2025.png}
-\caption{BEV and PHEV share of active vehicles, 2025 (11\_06\_type\_share\_2025.png)}
+\caption{BEV and PHEV share of active vehicles in 2025}
+\label{fig:typeshare}
 \end{figure}
 
-\begin{figure}[H]
+Geographically, the population remains concentrated but is spreading. King County's share of active vehicles fell from 55.1\% in 2019 to 49.7\% in 2025 (Figure~\ref{fig:kingshare}), even though its absolute stock rose from 29,067 to 134,145 vehicles. The used share of title activity is lower in King County than in the rest of the state in every year shown (Figure~\ref{fig:usedshare}), which is consistent with a larger share of new vehicles in the Seattle area. Figure~\ref{fig:entryroutes} decomposes how vehicles first enter the Washington records: the great majority arrive as new titles, a smaller group as first Washington titles for used cars, and a small group through registration only. Frequency tables for makes, counties and entry routes, together with the vehicle count by year and type, are written to \texttt{outputs/tables/10\_02}--\texttt{10\_04}; the figures are produced in sections 10.2 and 11.2--11.6 of the R script.
+
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=6in,height=0.85\textheight,keepaspectratio]{11_02_king_share.png}
-\caption{King County's share of active vehicles (11\_02\_king\_share.png)}
+\caption{King County's share of active vehicles}
+\label{fig:kingshare}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=6in,height=0.85\textheight,keepaspectratio]{11_03_used_share.png}
-\caption{Used share of title activity, King and the rest of the state (11\_03\_used\_share.png)}
+\caption{Used share of title activity, King County and the rest of the state}
+\label{fig:usedshare}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=6in,height=0.85\textheight,keepaspectratio]{11_04_entry_routes.png}
-\caption{How vehicles first enter the Washington records, by year (11\_04\_entry\_routes.png)}
+\caption{How vehicles first enter the Washington records, by year}
+\label{fig:entryroutes}
 \end{figure}
 
-\begin{itemize}
-  \item \textbf{Frequency tables (as PNG and CSV):} 10\_01 vehicles by year and type, 10\_02 makes, 10\_03 counties, 10\_04 entry routes.
-  \item \textbf{Key numbers:} King's share of active vehicles fell from 55.1\% (2019) to 49.7\% (2025).
-  \item \textbf{code: 10.2 (frequency tables), 11.2--11.6.}
-\end{itemize}
+\FloatBarrier
 
 \section{Data Pre-processing}
 
 \subsection{Import checks}
 
-\begin{itemize}
-  \item Raw file verified by SHA-256 and row count before use; every column read as text, then parsed with explicit checks (dates, model year, price): the script stops if any value fails to parse.
-  \item Date parsing forced to English month names (otherwise every date becomes missing on a non-English computer, with no error).
-  \item \textbf{code: sections 1--2.}
-\end{itemize}
+The raw file is verified before it is used: its SHA-256 hash and row count must match the frozen extract, otherwise the script stops. Every column is read as text first, so that no value is changed silently on import, and is then parsed with explicit checks on dates, model year and price. The script also stops if any transaction date fails to parse or if the year field disagrees with the transaction date. Date parsing is forced to English month names, because otherwise every date becomes missing on a computer with a non-English locale, and no error is raised. Figure~\ref{fig:pipeline} summarises the path from the raw transactions to the analysis: cleaning, the vehicle-year and vehicle-history tables, the reconciliation checks, and the statistical methods.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  stage/.style={draw=mgray!55, rounded corners=2pt, align=left, text width=0.93\textwidth, inner sep=4pt, font=\small},
+  arr/.style={-{Latex[length=2.2mm]}, semithick, draw=mgray!80},
+  node distance=0.45cm
+]
+\node[stage, fill=mblue!15, draw=mblue!65] (s1) {\textbf{Source records} (sections 1--2): 1,926,507 transactions, 33 columns; SHA-256 and row-count checks; all fields read as text and parsed with assertions};
+\node[stage, fill=mgreen!15, draw=mgreen!65, below=of s1] (s2) {\textbf{Cleaning} (section 3): remove 76 exact duplicates, 50 hydrogen vehicles, 8,233 records without a Washington county, and 9,074 exempt, low-speed or off-road records};
+\node[stage, fill=mgold!18, draw=mgold!65, below=of s2] (s3) {\textbf{Vehicle-year table} (section 4): 1,349,135 rows, one per vehicle per year, with the county and use class at the end of the year};
+\node[stage, fill=mclay!15, draw=mclay!65, below=of s3] (s4) {\textbf{Vehicle histories and flows} (sections 5--6): 397,023 vehicles; entry route, age, tenure, transfers, county moves, entries, returns and two-year exits};
+\node[stage, fill=mblue!10, draw=mblue!55, below=of s4] (s5) {\textbf{Verification} (section 9): the stock-and-flow identity holds in every year; 70 benchmark figures are recomputed and the 4 differences explained};
+\node[stage, fill=mgreen!10, draw=mgreen!55, below=of s5] (s6) {\textbf{Statistical analysis} (sections 10--14): descriptives and correlation, probability models, hypothesis tests and ANOVA, linear and logistic regression};
+\foreach \a/\b in {s1/s2,s2/s3,s3/s4,s4/s5,s5/s6} \draw[arr] (\a) -- (\b);
+\end{tikzpicture}
+\caption{Data pipeline from transactions to the statistical analysis. Section numbers refer to the R script.}
+\label{fig:pipeline}
+\end{figure}
 
 \subsection{Cleaning rules, step by step}
+
+The cleaning rules address four problems that would otherwise distort the population. Exact duplicate rows (all 33 columns identical) are removed first. Hydrogen vehicles are removed because they are not plug-in vehicles. Records without a Washington address and county are removed, because the question concerns vehicles in Washington and every geographic measure needs a county. Exempt use classes are removed because they have no annual renewal, so leaving cannot be measured for them, and low-speed and off-road classes are removed because they are not general road vehicles. Table~\ref{tab:flow} reports the rows, vehicles and rows removed at each step; the study population is 1,909,074 rows and 397,023 vehicles.
 
 \begin{table}[htbp]
 \centering
 \footnotesize
-\caption{Records kept at each cleaning step (09\_flow\_table.csv)}
-\begin{tabularx}{\textwidth}{@{}XrrrX@{}}
+\caption{Records kept at each cleaning step}
+\label{tab:flow}
+\begin{tabularx}{\textwidth}{@{}Xrrrp{3.6cm}@{}}
 \toprule
 \textbf{Step} & \textbf{Rows} & \textbf{Vehicles} & \textbf{Rows removed} & \textbf{Reason}\\
 \midrule
@@ -225,24 +329,22 @@ Raw file & 1,926,507 & 401,956 & & \\
 Remove exact duplicate rows & 1,926,431 & 401,956 & 76 & \\
 Remove hydrogen vehicles & 1,926,381 & 401,935 & 50 & \\
 Keep Washington addresses with a county & 1,918,148 & 401,256 & 8,233 & \\
-Remove exempt use classes & 1,909,358 & 397,082 & 8,790 & No annual renewal, so exit can't be measured\\
+Remove exempt use classes & 1,909,358 & 397,082 & 8,790 & No annual renewal, so exit cannot be measured\\
 Remove low-speed and off-road classes & 1,909,074 & 397,023 & 284 & Not general road vehicles\\
 Vehicle-years & 1,349,135 & 397,023 & & \\
 Vehicle histories & 397,023 & 397,023 & & \\
 \bottomrule
 \end{tabularx}
+\tabnote{\texttt{outputs/tables/09\_flow\_table.csv}. The cleaning rules are applied in this order in section 3 of the R script.}
 \end{table}
 
-\begin{itemize}
-  \item \textbf{Duplicates:} 76 exact duplicate rows removed (all 33 columns identical).
-  \item \textbf{Out of scope:} hydrogen vehicles (not plug-in), records without a Washington address and county, exempt use classes (no annual renewal, so leaving can't be measured), low-speed and off-road classes.
-  \item \textbf{Result:} 1,909,074 rows and 397,023 vehicles in the study population.
-\end{itemize}
+The rules are also tested for how much they matter. Table~\ref{tab:ruleeffects} repeats the headline counts after each rule and, as a sensitivity check, on passenger-class vehicles only. Across the main rules the 2025 count changes by under 1\% and King County's share by under 0.3 percentage points, so no conclusion depends on a particular cleaning decision.
 
 \begin{table}[htbp]
 \centering
 \small
-\caption{How much each rule changes the headline numbers (09\_rule\_effects.csv)}
+\caption{How much each cleaning rule changes the headline numbers}
+\label{tab:ruleeffects}
 \begin{tabularx}{\textwidth}{@{}Xrrr@{}}
 \toprule
 \textbf{After rule} & \textbf{Vehicles ever} & \textbf{Active 2025} & \textbf{King share 2025 (\%)}\\
@@ -255,26 +357,20 @@ After removing low-speed classes (study population) & 397,023 & 270,098 & 49.67\
 Sensitivity: passenger class only & 383,262 & 259,792 & 49.94\\
 \bottomrule
 \end{tabularx}
+\tabnote{\texttt{outputs/tables/09\_rule\_effects.csv}, computed in section 9.3 of the R script.}
 \end{table}
-
-\begin{itemize}
-  \item \textbf{Interpret:} the rules change active vehicles in 2025 by under 1\% and King's share by under 0.3 points, so no conclusion depends on them.
-  \item \textbf{code: section 3; rule effects 9.3.}
-\end{itemize}
 
 \subsection{Inconsistencies corrected}
 
-\begin{itemize}
-  \item \textbf{New/Used label:} 305,781 of 310,820 new-car titles have a same-day registration labelled ``Used''; entry route is therefore taken from the title, not the label (2.3, 5.1).
-  \item \textbf{Several counties in one year:} 13,677 vehicle-years; the county at the last record of the year is used, so county totals add up to the state total (4, 9.2).
-  \item \textbf{Fields that should never change for a vehicle} (type, model year, make, model): checked, and none changes (2.4).
-  \item \textbf{Prices:} 17 prices whose digits are the sale date (e.g. \$62,720 on 27/06/2020) removed; range kept to \$1,000--\$300,000; 23 same-day conflicting prices set aside; prices converted to September 2026 dollars with CPI-U (October 2025 has no CPI, so those sales drop out).
-\end{itemize}
+Several inconsistencies in the raw fields are corrected explicitly. The New/Used label is the most important: 305,781 of the 310,820 new-car titles have a same-day registration labelled ``Used'', because registration rows are always labelled Used. The entry route is therefore taken from the title row, not from the label (section 5.1). A vehicle can also appear in several counties within one year (13,677 vehicle-years); the county at the last record of the year is used, so county totals add up exactly to the state total (section 9.2). Fields that should never change for a vehicle---type, model year, make and model---were checked, and none changes (section 2.4).
+
+Prices require a separate cleaning path, summarised in Table~\ref{tab:priceflow}. Sale prices exist only on title rows. Seventeen prices whose digits are the sale date (for example \$62,720 on 27/06/2020) are removed, the range is kept to \$1,000--\$300,000, 23 same-day conflicting prices are set aside, and the remainder is converted to September 2026 dollars with the CPI-U. October 2025 has no CPI in the extract, so those sales drop out. Odometer readings are kept as a separate sample with their own checks, because a mileage value is only meaningful on a sale.
 
 \begin{table}[htbp]
 \centering
 \small
-\caption{Price records kept at each step (07\_price\_flow.csv)}
+\caption{Price records kept at each step}
+\label{tab:priceflow}
 \begin{tabularx}{\textwidth}{@{}Xr@{}}
 \toprule
 \textbf{Step} & \textbf{Rows}\\
@@ -290,191 +386,241 @@ Used sale events & 144,240\\
 Used sale events in the mileage sample & 143,527\\
 \bottomrule
 \end{tabularx}
+\tabnote{\texttt{outputs/tables/07\_price\_flow.csv}, section 7 of the R script. The descriptive price statistics use 141,854 used sales with a usable real price; the specification model in section 3.4 uses 141,153 sales with complete age, mileage and make fields.}
 \end{table}
-
-\begin{itemize}
-  \item \textbf{Mileage:} odometer readings kept as a separate sample with their own checks (07\_odometer\_checks.csv).
-  \item \textbf{code: 2.3--2.4, 4, 5.1, 7.1--7.6.}
-\end{itemize}
 
 \subsection{Feature engineering}
 
-\begin{itemize}
-  \item \textbf{From transactions to a population:} 1,349,135 vehicle-year records (one per vehicle per year) and one history per vehicle (first and last year, entry route, transfers, moves).
-  \item \textbf{Exit rule:} no record in the next two years; a vehicle that comes back later is a ``return''. A gap-filled count treats a one-year gap as still active.
-  \item \textbf{Other features:} age, tenure in the records, prior transfers, region (King / Western / Eastern Washington), county size class, real price.
-  \item \textbf{code: sections 4--6.}
-\end{itemize}
+The central feature-engineering step turns transactions into a population. A vehicle-year table gives one row per vehicle per year (1,349,135 rows) and a vehicle-history table gives one row per vehicle (397,023 rows), with the first and last year, the entry route, the number of prior transfers and any county moves. Two features require a rule rather than a simple sum. A vehicle is treated as leaving after a year if it has no record in the following two years, and a vehicle that reappears after such a gap is counted as a return; the gap-filled count treats a one-year gap as still active. Figure~\ref{fig:timeline} illustrates the four cases that these definitions separate. Other derived features are age, tenure in the records, region (King, western Washington outside King, or eastern Washington), county size class and real price.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=1.55cm,y=0.95cm,font=\footnotesize]
+\foreach \i/\y in {1/2019,2/2020,3/2021,4/2022}{
+  \node[text=mgray] at (\i,1.0) {\y};
+  \draw[mgray!30] (\i,0.7) -- (\i,-4.35);
+}
+% A: record every year
+\node[anchor=east] at (0.25,-0.55) {A: record every year};
+\draw[thick, mblue!70] (1,-0.55) -- (4,-0.55);
+\foreach \i in {1,2,3,4} \fill[mblue] (\i,-0.55) circle (2.3pt);
+% B: one-year gap
+\node[anchor=east] at (0.25,-1.55) {B: one-year gap};
+\draw[thick, mgreen!70] (1,-1.55) -- (3,-1.55);
+\fill[mgreen] (1,-1.55) circle (2.3pt);
+\draw[mgreen, fill=white] (2,-1.55) circle (2.3pt);
+\fill[mgreen] (3,-1.55) circle (2.3pt);
+\node[above, fill=white, inner sep=1pt] at (2,-1.45) {gap-filled};
+% C: exit after 2019
+\node[anchor=east] at (0.25,-2.55) {C: exit after 2019};
+\fill[mclay] (1,-2.55) circle (2.3pt);
+\foreach \i in {2,3,4} \node[text=mclay] at (\i,-2.55) {$\times$};
+\node[right] at (4.15,-2.55) {no record in 2020--21};
+% D: exit and return
+\node[anchor=east] at (0.25,-3.55) {D: exit, then return};
+\fill[mgold] (1,-3.55) circle (2.3pt);
+\foreach \i in {2,3} \node[text=mgold] at (\i,-3.55) {$\times$};
+\fill[mgold] (4,-3.55) circle (2.3pt);
+\node[right] at (4.15,-3.55) {record again in 2022};
+% legend
+\node[anchor=west, font=\footnotesize] at (0.6,-4.2) {\textcolor{mblue}{$\bullet$} record \quad \textcolor{mgreen}{$\circ$} gap-filled (one missing year) \quad \textcolor{mclay}{$\times$} no record};
+\end{tikzpicture}
+\caption{Entry, exit and return on a vehicle timeline. Two consecutive years without a record define an exit; a later record is a return. The definitions are implemented in section 6 of the R script.}
+\label{fig:timeline}
+\end{figure}
+
+Missing values and outliers are handled at this stage rather than dropped silently. Sale dates are blank on 73.5\% of rows, legislative district on 0.43\% and county on 0.01\%; the county rule removes the latter, and district analyses are restricted to vehicles with a district. Electric range is recorded for only a minority of BEVs after model year 2020, so the range analysis is limited to vehicles of model year 2020 or earlier. Prices are screened as described above; no age or mileage outliers are removed, because the long right tail is genuine and is handled by medians, logs and robust standard errors. Standardisation is used where a common scale helps interpretation: logarithms for stock, growth and price, real prices for inflation, and z-scores for county comparisons. The feature definitions are in sections 4--6 of the R script.
 
 \subsection{Verification}
 
-\begin{figure}[H]
-\centering
-\includegraphics[width=6in,height=0.85\textheight,keepaspectratio]{10_01_table_vehicles_by_year_type.png}
-\caption{Vehicles by year and type (frequency table) (10\_01\_table\_vehicles\_by\_year\_type.png)}
-\end{figure}
+The population is checked in three independent ways before any statistical method is applied. First, the stock-and-flow identity of Figure~\ref{fig:stockflow} holds exactly for every year: the change in the active stock equals entries plus returns minus leavers. Second, 70 benchmark figures computed separately from the data portal were recomputed from the same extract; 66 match exactly or to rounding, and the four differences are explained (a difference of under 0.01\% in two counts of cars by number of sales, the exclusion of October 2025 because it has no CPI, and the specification model's use of real prices and grouped makes). Third, ten vehicle histories were checked by hand across the main cases. Table~\ref{tab:freqtype} gives the corresponding frequency table, active vehicles by year and type.
 
-\begin{itemize}
-  \item \textbf{Stock and flow reconcile exactly:} active next year = active + entries + returns $-$ leavers, for every year (9.1).
-  \item \textbf{Independent cross-check:} 70 benchmark figures computed separately from the data portal (data.wa.gov) were recomputed; 66 match exactly or to rounding, and the 4 differences are explained (09\_benchmark\_cross\_check.csv).
-  \item \textbf{Hand check:} ten vehicle histories across the main cases (09\_hand\_check\_vehicles.csv).
-  \item \textbf{Limits:} leaving is inferred from missing records; the 2025 count is slightly provisional; 2026 is partial (to 30 September).
-  \item \textbf{code: section 9.}
-\end{itemize}
+\begin{table}[htbp]
+\centering
+\footnotesize
+\caption{Active plug-in vehicles by year and type (frequency table)}
+\label{tab:freqtype}
+\begin{tabular}{rrrrr}
+\toprule
+\textbf{Year} & \textbf{BEV} & \textbf{PHEV} & \textbf{Total} & \textbf{BEV \%}\\
+\midrule
+2010 & 78 & 2 & 80 & 97.5\\
+2011 & 1,041 & 136 & 1,177 & 88.4\\
+2012 & 1,843 & 1,089 & 2,932 & 62.9\\
+2013 & 5,261 & 2,267 & 7,528 & 69.9\\
+2014 & 8,200 & 3,621 & 11,821 & 69.4\\
+2015 & 10,927 & 4,768 & 15,695 & 69.6\\
+2016 & 13,834 & 7,139 & 20,973 & 66.0\\
+2017 & 18,696 & 9,789 & 28,485 & 65.6\\
+2018 & 26,960 & 13,786 & 40,746 & 66.2\\
+2019 & 36,478 & 16,232 & 52,710 & 69.2\\
+2020 & 45,685 & 18,039 & 63,724 & 71.7\\
+2021 & 62,603 & 22,737 & 85,340 & 73.4\\
+2022 & 87,533 & 27,381 & 114,914 & 76.2\\
+2023 & 129,893 & 36,534 & 166,427 & 78.0\\
+2024 & 177,323 & 46,810 & 224,133 & 79.1\\
+2025 & 215,504 & 54,594 & 270,098 & 79.8\\
+2026 (Jan--Sep) & 195,415 & 46,937 & 242,352 & 80.6\\
+\bottomrule
+\end{tabular}
+\tabnote{\texttt{outputs/tables/10\_freq\_vehicles\_by\_year\_type.csv}, section 10.2 of the R script.}
+\end{table}
+
+Two limitations follow from the data. Leaving is inferred from missing records, so the analysis cannot distinguish a vehicle that moved out of state from one that was taken off the road. The 2025 count is slightly provisional because the final 2026 records are incomplete, and 2026 covers only January to September. These limits are carried through to the conclusions. The reconciliation and benchmark checks are in section 9 of the R script.
+
+\FloatBarrier
 
 \section{Statistical Analysis and Modeling}
 
 \subsection{Probability and distributions}
 
-\begin{figure}[H]
+Weekly new-vehicle entries are a discrete counting process with 873 weeks. A Poisson model is far too narrow: the dispersion statistic is 9,627 and its 95\% band covers only 37\% of weeks, because the variance is much larger than the mean. A negative binomial model fits much better (AIC 9,571 against 39,696), its 95\% band covers 95\% of weeks, and the observed number of zero weeks (39) is close to the expected 38 under the negative binomial and 45 under the Poisson (Figure~\ref{fig:poisson}). The negative binomial is therefore the appropriate model for the arrival of new vehicles.
+
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=6in,height=0.85\textheight,keepaspectratio]{12_01_weekly_entries_nb.png}
-\caption{Weekly new-vehicle entries: Poisson and negative binomial fits (12\_01\_weekly\_entries\_nb.png)}
+\caption{Weekly new-vehicle entries with the negative binomial fit and its 95\% prediction band}
+\label{fig:poisson}
 \end{figure}
 
-\begin{itemize}
-  \item \textbf{Discrete process:} weekly entries (873 weeks). Poisson is far too narrow (dispersion 9,627; its 95\% band covers 37\% of weeks). Negative binomial fits much better (AIC 9,571 vs 39,696; band covers 95\% of weeks); zero weeks observed 39, expected 38 (NB) and 45 (Poisson).
-\end{itemize}
+The relationship between a discrete count and the normal distribution is shown by a binomial example. Of the 4,843 vehicles of model year 2013 that were active in 2021, 400 left by the end of 2022 (8.3\%), against 6.9\% expected from the 2019 two-year exit rate; the exact upper-tail probability is $P(X\ge 400)=0.0001$. The normal approximation to the binomial improves as the number of trials grows: with a continuity correction its error is $-0.083$ at $n=10$ and $-0.007$ at $n=1{,}000$ (Figure~\ref{fig:binomial}).
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=6in,height=0.85\textheight,keepaspectratio]{12_02_binomial_vs_normal.png}
-\caption{Binomial probabilities and the normal approximation (12\_02\_binomial\_vs\_normal.png)}
+\caption{Binomial probabilities and the normal approximation for the 2013 cohort}
+\label{fig:binomial}
 \end{figure}
 
-\begin{itemize}
-  \item \textbf{Binomial $\rightarrow$ normal:} model-year 2013 cohort active in 2021: 400 of 4,843 left (8.3\%) against 6.9\% expected from the 2019 two-year exit rate; exact P(X $\ge$ 400) = 0.0001. The normal approximation error falls as n grows (with continuity correction: $-0.083$ at n = 10, $-0.007$ at n = 1,000).
-\end{itemize}
+The number of sale events per car is close to a geometric distribution overall ($\hat{p}=0.85$, goodness-of-fit $p=0.21$), but not within single model years ($p<0.001$): the overall fit is a mixture of cohorts with different selling behaviour (Figure~\ref{fig:geometric}). Finally, the sampling distribution of the mean is illustrated with vehicle age, which has skewness 1.32. Repeated samples of size $n$ produce a distribution whose standard deviation matches $\sigma/\sqrt{n}$ (0.133 against the theoretical 0.135 at $n=500$), and whose skewness falls from 0.51 at $n=5$ to 0.02 at $n=500$, as the central limit theorem predicts (Figure~\ref{fig:clt}). The four models are implemented in sections 12.1--12.4 of the R script.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=6in,height=0.85\textheight,keepaspectratio]{12_03_geometric_sales.png}
-\caption{Sale events per car against a geometric model (12\_03\_geometric\_sales.png)}
+\caption{Sale events per car against a geometric model, overall and by model-year cohort}
+\label{fig:geometric}
 \end{figure}
 
-\begin{itemize}
-  \item \textbf{Geometric:} sales per car fit a geometric model overall ($\hat{p}$ = 0.85, goodness-of-fit p = 0.21) but not within single model years (p $<$ 0.001): the overall fit is a mixture of cohorts.
-\end{itemize}
-
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=6in,height=0.85\textheight,keepaspectratio]{12_04_clt_vehicle_age.png}
-\caption{Sampling distribution of mean vehicle age (central limit theorem) (12\_04\_clt\_vehicle\_age.png)}
+\caption{Sampling distribution of mean vehicle age for sample sizes from 5 to 500}
+\label{fig:clt}
 \end{figure}
 
-\begin{itemize}
-  \item \textbf{Sampling distribution of means:} vehicle age (skewness 1.32). SD of sample means matches $\sigma/\sqrt{n}$ (0.133 vs 0.135 at n = 500); skewness of the means falls from 0.51 (n = 5) to 0.02 (n = 500).
-  \item \textbf{code: 12.1--12.4.}
-\end{itemize}
-
 \subsection{Hypothesis tests}
+
+The main questions are tested with two hypothesis tests, supported by a set of sensitivity and supporting tests. Table~\ref{tab:maintests} reports the main and sensitivity results with effect sizes (adjusted exit probabilities for the logistic rows) and whether each test remains significant after a Bonferroni correction across the 9 non-sensitivity (main and supporting) tests in this section; Table~\ref{tab:supporttests} reports the supporting tests. Effect sizes are reported because with hundreds of thousands of observations a very small difference can be statistically significant.
 
 \begin{table}[htbp]
 \centering
 \footnotesize
-\caption{Hypothesis tests (main, sensitivity and supporting) (13\_hypothesis\_tests.csv)}
-\begin{tabularx}{\textwidth}{@{}XXrrrr@{}}
+\caption{Main and sensitivity hypothesis tests}
+\label{tab:maintests}
+\begin{tabularx}{\textwidth}{@{}Xlp{1.7cm}rrp{2.7cm}c@{}}
 \toprule
-\textbf{Test} & \textbf{Role} & \textbf{Estimate} & \textbf{95\% CI low} & \textbf{95\% CI high} & \textbf{p}\\
+\textbf{Test} & \textbf{Role} & \textbf{Estimate} & \textbf{95\% CI} & \textbf{$p$} & \textbf{Adjusted exit} & \textbf{Bonf.}\\
 \midrule
-Two-proportion z: King share 2025 vs 2019 & Main: spread & $-5.480$ & $-5.944$ & $-5.015$ & $<$ 0.001\\
-Two-proportion z: King share 2025 vs 2019, gap-filled & Sensitivity & $-5.399$ & $-5.855$ & $-4.944$ & $<$ 0.001\\
-Logistic LR test: PHEV vs BEV exit, adjusted for age, 2019 baseline & Sensitivity & 0.897 & 0.832 & 0.968 & 0.005\\
-Logistic LR test: PHEV vs BEV exit, adjusted for age, 2021 baseline & Main: retention & 1.035 & 0.975 & 1.098 & 0.264\\
-Logistic LR test: PHEV vs BEV exit, adjusted for age, 2023 baseline & Sensitivity & 0.967 & 0.924 & 1.012 & 0.143\\
-One-sample z (mean): age of a 2025 sample vs 2019 mean & Supporting & 3.124 & 2.860 & 3.388 & $<$ 0.001\\
-One-sample z (proportion): 2023 exit share vs 2019 rate & Supporting & 7.534 & 7.407 & 7.661 & $<$ 0.001\\
-One-sample t: county log growth vs King's growth & Supporting & 1.806 & 1.720 & 1.891 & $<$ 0.001\\
-One-sample t: as above, counties with 10+ vehicles in 2019 & Sensitivity & 1.795 & 1.718 & 1.873 & $<$ 0.001\\
-Paired t: county BEV share 2025 vs 2019 & Supporting & 17.605 & 14.506 & 20.704 & $<$ 0.001\\
-Welch t: age at last record, BEV vs PHEV & Supporting & $-0.829$ & $-0.892$ & $-0.766$ & $<$ 0.001\\
-Welch t: age at the 2021 baseline, vehicles that left vs stayed & Supporting: feature separation & 0.215 & 0.142 & 0.288 & $<$ 0.001\\
-Chi-square: exit by prior transfers (0, 1, 2+), 2021 baseline & Supporting: feature separation &  &  &  & $<$ 0.001\\
+Two-proportion $z$, King share 2025 vs 2019 & Main: spread & $-5.48$ & $-5.94$, $-5.02$ & $<0.001$ & Cohen's $h=-0.110$ & yes\\
+Two-proportion $z$, King share, gap-filled & Sensitivity & $-5.40$ & $-5.85$, $-4.94$ & $<0.001$ & Cohen's $h=-0.108$ & yes\\
+Logistic LR, PHEV vs BEV exit, 2019 baseline & Sensitivity & 0.897 & 0.832, 0.968 & 0.005 & BEV 7.08\%, PHEV 6.41\% & yes\\
+Logistic LR, PHEV vs BEV exit, 2021 baseline & Main: retention & 1.035 & 0.975, 1.098 & 0.264 & BEV 7.39\%, PHEV 7.62\% & no\\
+Logistic LR, PHEV vs BEV exit, 2023 baseline & Sensitivity & 0.967 & 0.924, 1.012 & 0.143 & BEV 7.59\%, PHEV 7.35\% & no\\
 \bottomrule
 \end{tabularx}
+\tabnote{\texttt{outputs/tables/13\_hypothesis\_tests.csv}, sections 13.1--13.2. Estimates are percentage points for the proportion tests and odds ratios for the logistic tests; the effect size for the logistic rows is the adjusted two-year exit probability by type. CI = confidence interval.}
 \end{table}
 
-\begin{itemize}
-  \item \textbf{Main spread test (H$_0$: King's share is the same in 2025 as in 2019):} two-proportion z = $-23.0$; share fell 5.5 points (95\% CI 5.0--5.9), p $\approx 3 \times 10^{-117}$. Reject H$_0$. Note: many vehicles are in both years, so the samples are not independent; the gap-filled count gives the same result.
-  \item \textbf{Main retention test (H$_0$: after adjusting for age, BEVs and PHEVs are equally likely to leave within two years), 2021 baseline:} odds ratio 1.03 (0.97--1.10), likelihood-ratio p = 0.26. Don't reject H$_0$. Sensitivity: 0.90 (p = 0.005) at 2019, 0.97 (p = 0.14) at 2023.
-  \item \textbf{One-sample z (mean):} mean age of a random 500-vehicle sample from 2025 = 3.12 vs the 2019 mean 2.58; z = 4.03, p $<$ 0.001 ($\sigma$ known from the 2025 records).
-  \item \textbf{One-sample z (proportion):} 2023 exit share 7.53\% vs the 2019 rate; z = 10.9, p $<$ 0.001.
-  \item \textbf{One-sample t:} mean county log growth 1.81 vs King's growth; t = 6.56, p $<$ 0.001 --- the average county grew faster than King.
-  \item \textbf{Paired t:} county BEV share rose 17.6 points from 2019 to 2025 (14.5--20.7), t = 11.5, p $<$ 0.001, 35 counties (Wilcoxon p is in the table's effect\_size column).
-  \item \textbf{Two-sample (Welch) t:} BEVs that left were 0.83 years younger at their last record than PHEVs that left (p $<$ 0.001).
-  \item \textbf{Feature separation (2021 baseline):} vehicles that left were 0.21 years older (Welch p $<$ 0.001); exit differs by prior transfers (chi-square 84.8, df 2, p $<$ 0.001).
-  \item \textbf{Interpret p-values with effect sizes:} with very large n, tiny differences are significant; the table's effect\_size column and the Bonferroni column help here.
-  \item \textbf{code: 13.1--13.8.}
-\end{itemize}
+The main spread test asks whether King County's share of active vehicles is the same in 2025 as in 2019. It is not: the two-proportion $z$ statistic is $-23.0$, the share fell 5.48 percentage points (95\% CI 5.02 to 5.94), and $p\approx3\times10^{-117}$; the effect size is small (Cohen's $h=-0.110$) but the change is precisely estimated. One caveat matters for interpretation: many vehicles appear in both years, so the two samples are not independent, and the nominal standard error is too small. The gap-filled count gives the same estimate ($-5.40$ points), which is reassuring, but the test is best read as a description of a large compositional shift rather than as a test of two independent populations.
+
+The main retention test asks whether, after adjusting for age, BEVs and PHEVs are equally likely to leave the records within two years, using the 2021 baseline. The PHEV odds ratio is 1.035 (95\% CI 0.975 to 1.098) with a likelihood-ratio $p=0.264$, so the hypothesis of equal retention is not rejected; the adjusted exit probabilities are 7.39\% for BEVs and 7.62\% for PHEVs. The 2019 baseline shows a small but significant difference in the opposite direction (odds ratio 0.897, $p=0.005$, so PHEVs were less likely to leave), while the 2023 baseline is again not significant (0.967, $p=0.143$). The evidence therefore supports the conclusion that the two types now leave at similar rates, with a historical difference before 2020.
+
+The supporting tests check the ingredients of that conclusion. A one-sample $z$ test compares the mean age of a random sample of 500 vehicles from 2025 (3.12 years, 95\% CI 2.86 to 3.39) with the 2019 mean of 2.58, using the 2025 population standard deviation of 3.01 ($z=4.03$, $p<0.001$, $d=0.18$). A second one-sample $z$ test compares the 2023 exit share (7.53\%, 95\% CI 7.41 to 7.66) with the 2019 rate ($z=10.91$, $p<0.001$). A one-sample $t$ test shows that the mean log growth of the 38 counties other than King (1.81) exceeds King's growth ($t=6.56$, $p<0.001$, $d=1.06$). A paired $t$ test shows that county BEV share rose 17.6 percentage points between 2019 and 2025 (95\% CI 14.5 to 20.7, $t=11.55$, $p<0.001$), and a Welch $t$ test shows that BEVs that left were 0.83 years younger at their last record than PHEVs that left ($p<0.001$, $d=-0.31$). Finally, vehicles that left the 2021 cohort were 0.21 years older than those that stayed ($p<0.001$) and exit rates differ by prior transfers (7.1\%, 8.5\% and 10.7\% for 0, 1 and 2+ transfers; $\chi^2=84.8$, df 2, $p<0.001$, Cram\'er's $V=0.032$). These tests identify the features that separate leavers from stayers, and they motivate the logistic model in section 3.4. The tests are implemented in sections 13.1--13.8 of the R script.
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\caption{Supporting hypothesis tests}
+\label{tab:supporttests}
+\begin{tabularx}{\textwidth}{@{}Xlp{1.7cm}rrp{2.2cm}c@{}}
+\toprule
+\textbf{Test} & \textbf{Role} & \textbf{Estimate} & \textbf{95\% CI} & \textbf{$p$} & \textbf{Effect size} & \textbf{Bonf.}\\
+\midrule
+One-sample $z$ (mean): age of a 2025 sample vs 2019 mean & Supporting & 3.124 & 2.860, 3.388 & $<0.001$ & $d=0.18$ & yes\\
+One-sample $z$ (proportion): 2023 exit share vs 2019 rate & Supporting & 7.534 & 7.407, 7.661 & $<0.001$ & $h=0.026$ & yes\\
+One-sample $t$: county log growth vs King's growth & Supporting & 1.806 & 1.720, 1.891 & $<0.001$ & $d=1.06$ & yes\\
+One-sample $t$: counties with 10+ vehicles in 2019 & Sensitivity & 1.795 & 1.718, 1.873 & $<0.001$ & --- & yes\\
+Paired $t$: county BEV share 2025 vs 2019 & Supporting & 17.605 & 14.506, 20.704 & $<0.001$ & $d_z=1.95$ & yes\\
+Welch $t$: age at last record, BEV vs PHEV & Supporting & $-0.829$ & $-0.892$, $-0.766$ & $<0.001$ & $d=-0.31$ & yes\\
+Welch $t$: age at 2021 baseline, left vs stayed & Supporting & 0.215 & 0.142, 0.288 & $<0.001$ & $d=0.08$ & yes\\
+Chi-square: exit by prior transfers (0, 1, 2+) & Supporting & 84.8 & --- & $<0.001$ & $V=0.032$ & yes\\
+\bottomrule
+\end{tabularx}
+\tabnote{\texttt{outputs/tables/13\_hypothesis\_tests.csv}, sections 13.3--13.8. Estimates are in the units of the tested quantity (years, percentage points, or the mean); the chi-square row reports the test statistic.}
+\end{table}
 
 \subsection{Analysis of variance}
 
-\begin{figure}[H]
+The one-way analysis of variance asks whether county growth from 2019 to 2025 differs by county size class (small, medium, large). The test is chosen by the assumption checks, not by the resulting $p$-value: Levene's test does not reject equal variances ($p=0.559$) and the Shapiro--Wilk test does not reject normal residuals ($p=0.075$), so the classic one-way ANOVA is the primary test. It gives $F=2.80$ with 2 and 36 degrees of freedom, $p=0.074$ and $\eta^2=0.13$: there is only weak evidence that large counties grew more slowly. The Welch ANOVA ($p=0.032$) and the Kruskal--Wallis test ($p=0.045$) are reported as sensitivity checks, and no Tukey pair is significant. Figure~\ref{fig:anova1} shows the group distributions and Table~\ref{tab:anova1} collects the tests.
+
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=6in,height=0.85\textheight,keepaspectratio]{13_01_anova_growth_by_size.png}
-\caption{County growth 2019--2025 by size class (one-way ANOVA) (13\_01\_anova\_growth\_by\_size.png)}
+\caption{County growth, 2019--2025, by county size class}
+\label{fig:anova1}
 \end{figure}
 
 \begin{table}[htbp]
 \centering
 \small
-\caption{One-way ANOVA: primary test and sensitivity checks (13\_anova\_oneway\_primary.csv)}
+\caption{One-way ANOVA: primary test and sensitivity checks}
+\label{tab:anova1}
 \begin{tabularx}{\textwidth}{@{}XrrrrX@{}}
 \toprule
-\textbf{Test} & \textbf{Statistic} & \textbf{df1} & \textbf{df2} & \textbf{p} & \textbf{Role}\\
+\textbf{Test} & \textbf{Statistic} & \textbf{df1} & \textbf{df2} & \textbf{$p$} & \textbf{Role}\\
 \midrule
 Classic one-way ANOVA & 2.80 & 2 & 36.0 & 0.074 & Primary (chosen by the assumption checks)\\
 Welch ANOVA (unequal variances) & 4.05 & 2 & 21.8 & 0.032 & Sensitivity check\\
-Kruskal-Wallis (no normality) & 6.22 & 2 &  & 0.045 & Sensitivity check\\
+Kruskal--Wallis (no normality) & 6.22 & 2 & & 0.045 & Sensitivity check\\
 \bottomrule
 \end{tabularx}
+\tabnote{\texttt{outputs/tables/13\_anova\_oneway\_primary.csv}, section 13.10. Levene $p=0.559$; Shapiro--Wilk $p=0.075$; $\eta^2=0.13$.}
 \end{table}
 
-\begin{itemize}
-  \item \textbf{One-way:} the primary test is chosen by the assumption checks, not the p-value: Levene p = 0.56 (equal variances) and Shapiro p = 0.075 (normal residuals), so classic ANOVA: F = 2.80, p = 0.074, $\eta^2$ = 0.13. Welch (0.032) and Kruskal--Wallis (0.045) are sensitivity checks; no Tukey pair is significant. Weak evidence that large counties grew less.
-\end{itemize}
+A two-way ANOVA adds the side of the Cascade crest. Size class is significant ($F=3.45$, $p=0.044$) and side is not ($F=2.29$, $p=0.14$), but the interaction is ($F=4.57$, $p=0.018$): the size effect differs between eastern and western Washington (Figure~\ref{fig:anova2}). The cells are small---few eastern counties are in the largest class---so the interaction should be read with care rather than as a stable regional law.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=6in,height=0.85\textheight,keepaspectratio]{13_02_anova_interaction.png}
-\caption{Two-way ANOVA: size class by side of the Cascades (13\_02\_anova\_interaction.png)}
+\caption{Two-way ANOVA: county size class by side of the Cascades}
+\label{fig:anova2}
 \end{figure}
 
-\begin{itemize}
-  \item \textbf{Two-way:} size class F = 3.45 (p = 0.044), side F = 2.29 (p = 0.14), interaction F = 4.57 (p = 0.018): the size effect differs between east and west. Cells are small; read with care.
-\end{itemize}
+The same counties are then followed over time. A repeated-measures ANOVA on county BEV share for 2019, 2022 and 2025 shows a rise from 56\% to 74\% (Figure~\ref{fig:rm}). Mauchly's test rejects sphericity ($p<0.001$), so the Greenhouse--Geisser correction is used: the year effect remains highly significant ($p\approx10^{-14}$) with partial $\eta^2=0.78$, and the Friedman test agrees. A mixed ANOVA adds the side of the state as a between-county factor: the side-by-year interaction is $F=7.02$ ($p=0.002$), because eastern counties started lower (51\% against 61\% in 2019) and caught up (73\% against 75\% in 2025), as Figure~\ref{fig:mixed} shows. The assumption checks are in section 13.9 and the ANOVA models in sections 13.10--13.13 of the R script.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=6in,height=0.85\textheight,keepaspectratio]{13_03_rm_anova_bev_share.png}
-\caption{BEV share in the same counties, 2019, 2022 and 2025 (13\_03\_rm\_anova\_bev\_share.png)}
+\caption{BEV share in the same counties in 2019, 2022 and 2025}
+\label{fig:rm}
 \end{figure}
 
-\begin{itemize}
-  \item \textbf{Repeated measures:} mean county BEV share 56\% $\rightarrow$ 74\% (2019 $\rightarrow$ 2025). Mauchly's test rejects sphericity (p $<$ 0.001), so the Greenhouse--Geisser correction is used: p $\approx 10^{-14}$; partial $\eta^2$ = 0.78. Friedman test agrees.
-\end{itemize}
-
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=6in,height=0.85\textheight,keepaspectratio]{13_04_mixed_anova_bev_share.png}
-\caption{BEV share by side of the Cascades (mixed ANOVA) (13\_04\_mixed\_anova\_bev\_share.png)}
+\caption{BEV share by side of the Cascades (mixed ANOVA)}
+\label{fig:mixed}
 \end{figure}
-
-\begin{itemize}
-  \item \textbf{Mixed:} interaction side $\times$ year F = 7.02, p = 0.002: Eastern counties started lower (51\% vs 61\% in 2019) and caught up (73\% vs 75\% in 2025).
-  \item \textbf{code: 13.9 (assumption helpers), 13.10--13.13.}
-\end{itemize}
 
 \subsection{Regression}
 
-\begin{itemize}
-  \item \textbf{Simple (39 counties):} log growth 2019--25 on log 2019 stock: slope $-0.038$ (95\% CI $-0.076$ to 0.001), p = 0.058, $R^2$ = 0.09. Smaller counties grew slightly faster; weak.
-\end{itemize}
+The simplest regression asks whether counties that started with a larger stock grew more slowly. Regressing log growth from 2019 to 2025 on log 2019 stock gives a slope of $-0.038$ (95\% CI $-0.076$ to 0.001), $p=0.058$ and $R^2=0.09$: the relationship is in the expected direction but explains little of the variation across 39 counties. Table~\ref{tab:intervals} turns the fitted model into confidence and prediction intervals at four starting stocks. At a 2019 stock of 1,000 vehicles, the fitted log growth is 1.73 (95\% CI 1.62 to 1.84), but the 95\% prediction interval for a single county is 1.21 to 2.25. The prediction interval is three to six times wider than the confidence interval: the average county is estimated well, a particular county is not.
 
 \begin{table}[htbp]
 \centering
 \small
-\caption{Confidence and prediction intervals from the simple regression (14\_county\_intervals.csv)}
+\caption{Confidence and prediction intervals from the simple county regression}
+\label{tab:intervals}
 \begin{tabular}{rrrrrr}
 \toprule
 \textbf{2019 stock} & \textbf{Fitted log growth} & \textbf{CI low} & \textbf{CI high} & \textbf{PI low} & \textbf{PI high}\\
@@ -485,40 +631,41 @@ Kruskal-Wallis (no normality) & 6.22 & 2 &  & 0.045 & Sensitivity check\\
 10,000 & 1.64 & 1.46 & 1.82 & 1.10 & 2.18\\
 \bottomrule
 \end{tabular}
+\tabnote{\texttt{outputs/tables/14\_county\_intervals.csv}, section 14.1. CI = confidence interval; PI = prediction interval.}
 \end{table}
 
-\begin{itemize}
-  \item \textbf{Confidence vs prediction intervals:} the prediction interval is 3--6 times wider than the confidence interval: the average county is well estimated, a single county is not.
-  \item \textbf{Multiple:} growth on log stock, used share and BEV share (2019): $R^2$ = 0.26 (adjusted 0.19), HC3 standard errors; used share +1.11 (p = 0.089); all VIF $\le$ 1.47 (no collinearity problem).
-\end{itemize}
+A multiple regression adds the 2019 used share and the 2019 BEV share as predictors. It raises $R^2$ to 0.26 (adjusted 0.19) with HC3 robust standard errors, and the used-share coefficient is +1.11 ($p=0.089$); all variance inflation factors are at most 1.47, so collinearity is not a problem. The diagnostics in Figures~\ref{fig:resid}--\ref{fig:cooks} show no severe departure from the linear model, although a few counties have high leverage and Cook's distance, which is expected with 39 observations. The models are fitted in sections 14.1--14.2 of the R script.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=6in,height=0.85\textheight,keepaspectratio]{14_01_county_residuals.png}
-\caption{Residuals against fitted values, county regression (14\_01\_county\_residuals.png)}
+\caption{Residuals against fitted values for the county regression}
+\label{fig:resid}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=6in,height=0.85\textheight,keepaspectratio]{14_02_county_qq.png}
-\caption{Normal Q--Q plot of residuals (14\_02\_county\_qq.png)}
+\caption{Normal Q--Q plot of standardised residuals}
+\label{fig:qq}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=6in,height=4.4in,keepaspectratio]{14_03_county_cooks.png}
-\caption{Cook's distance (4/n rule) (14\_03\_county\_cooks.png)}
+\caption{Cook's distance for the county regression (dashed line: $4/n$)}
+\label{fig:cooks}
 \end{figure}
 
-\begin{itemize}
-  \item \textbf{Specification model (used prices):} log real price on age, mileage, type and make: $R^2$ = 0.67 (141,153 sales); each year of age $-11.4\%$, each 10,000 miles $-4.7\%$, PHEV +8.1\% vs BEV (holding the rest fixed). Residuals: 14\_04\_spec\_residuals.png.
-  \item \textbf{Logistic (exit within two years, trained at 2021, tested at 2023):} model A (base predictors) test AUC 0.522; model B (adds the vehicle's history) 0.569; DeLong p $\approx 10^{-76}$; McFadden $R^2$ 0.007 and 0.044. Both are weak: the reasons a vehicle leaves are not in the records.
-\end{itemize}
+A separate specification model explains the real price of used vehicles. Regressing log real price on age, mileage, type and make gives $R^2=0.67$ on 141,153 sales: each additional year of age is associated with an 11.4\% lower real price, each 10,000 additional miles with a 4.7\% lower price, and PHEVs sell for 8.1\% more than BEVs when the other fields are held fixed. This model is the basis for the used-price index in section 3.5, and its residuals are shown in the output file \texttt{14\_04\_spec\_residuals.png}.
+
+The logistic regression asks a different question: given what is known at the end of a year, how well can we predict whether a vehicle will leave within two years? Model~A uses the base predictors (age, type, make, region, use class and prior transfers); model~B adds five features from the vehicle's own history: missed years, late renewals, county moves, the type of the last record and the quarter of the last record. Both are trained on the 2021 baseline and tested on 2023, so the test outcome is not used in fitting. Discrimination is weak: the test AUC is 0.522 for model~A and 0.569 for model~B, the improvement is statistically detectable (DeLong $p\approx10^{-76}$), and McFadden's $R^2$ is 0.007 and 0.044 respectively (Table~\ref{tab:logistic}). Figure~\ref{fig:roc} shows the ROC curves and Figure~\ref{fig:calib} the calibration by predicted-probability tenth.
 
 \begin{table}[htbp]
 \centering
 \small
-\caption{Logistic models: fit and discrimination (14\_logistic\_performance.csv)}
+\caption{Logistic models of two-year exit: fit and discrimination}
+\label{tab:logistic}
 \begin{tabularx}{\textwidth}{@{}Xrrrrrr@{}}
 \toprule
 \textbf{Model} & \textbf{AIC} & \textbf{McFadden $R^2$} & \textbf{AUC train} & \textbf{AUC test} & \textbf{Brier (test)} & \textbf{Youden cut-off}\\
@@ -527,155 +674,145 @@ A: base predictors & 44,987 & 0.007 & 0.563 & 0.522 & 0.070 & 0.075\\
 B: plus history & 43,318 & 0.044 & 0.612 & 0.569 & 0.067 & 0.077\\
 \bottomrule
 \end{tabularx}
+\tabnote{\texttt{outputs/tables/14\_logistic\_performance.csv}, sections 14.4--14.7. Model A is the main model; model B adds five history features (missed years, late renewals, county moves, last-record type and quarter).}
 \end{table}
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=6in,height=0.85\textheight,keepaspectratio]{14_06_logistic_roc.png}
-\caption{ROC curves on the 2023 test data (14\_06\_logistic\_roc.png)}
+\caption{ROC curves for the exit model on the 2023 test data}
+\label{fig:roc}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=6in,height=0.85\textheight,keepaspectratio]{14_05_logistic_calibration.png}
-\caption{Calibration on the 2023 test data: predicted against observed exit, by tenth (14\_05\_logistic\_calibration.png)}
+\caption{Calibration on the 2023 test data: predicted against observed exit, by tenth}
+\label{fig:calib}
 \end{figure}
 
-\begin{itemize}
-  \item \textbf{Calibration:} both models get the overall rate right (mean predicted 7.7\% and 7.6\% vs 7.5\% observed). Model B's tenths run from 5.6\% to 13.4\% observed exit and follow the diagonal in the middle, but over-predict the top tenth (15.5\% predicted vs 13.4\%). Model A's observed rates only span 6.4--8.4\%, and its top tenth predicts 12.3\% against 8.4\% observed: little separation. Table: 14\_logistic\_calibration.csv.
-\end{itemize}
+Calibration is more informative than discrimination here. Both models reproduce the overall exit rate (mean predicted 7.7\% and 7.6\% against 7.5\% observed), and model~B's tenths run from 5.6\% to 13.4\% observed exit and follow the diagonal in the middle, although it over-predicts the top tenth (15.5\% predicted against 13.4\% observed). Model~A's observed rates span only 6.4\% to 8.4\%, so it barely separates leavers from stayers. The adjusted probabilities make the associations concrete: model~A predicts a 6.9\% two-year exit in King County against about 8\% elsewhere, 7.1\% with no prior transfer against 10.8\% with two or more, and 15.2\% for truck or commercial use against 7.4\% for passenger use; PHEVs are at 6.5\% against 7.9\% for BEVs with make held fixed, a within-make comparison that differs from the age-only test. At a 0.5 cut-off almost no vehicle is predicted to leave, and at the Youden cut-off model~B has sensitivity 0.40 and specificity 0.70. Figure~\ref{fig:boundary} shows the decision boundary on age and tenure, and Figure~\ref{fig:separation} the predicted probabilities of leavers and stayers.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=6in,height=0.85\textheight,keepaspectratio]{14_07_decision_boundary.png}
-\caption{Decision boundary on age and years in the records (14\_07\_decision\_boundary.png)}
+\caption{Decision boundary of the exit model on age and years in the records}
+\label{fig:boundary}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=6in,height=0.85\textheight,keepaspectratio]{14_08_logistic_class_separation.png}
-\caption{Predicted probabilities for vehicles that left and stayed (14\_08\_logistic\_class\_separation.png)}
+\caption{Predicted probabilities for vehicles that left and stayed in the 2023 test data}
+\label{fig:separation}
 \end{figure}
 
-\begin{itemize}
-  \item \textbf{Odds and adjusted probabilities (model A, 2021 training data):} adjusted two-year exit 6.9\% in King vs about 8\% elsewhere; 7.1\% with no prior transfer vs 10.8\% with two or more; 15.2\% for truck/commercial use vs 7.4\% passenger; PHEV 6.5\% vs BEV 7.9\% with make held fixed (this differs from the age-only main test because it compares within makes). Table: 14\_logistic\_adjusted\_probabilities.csv; odds ratios: 14\_logistic\_odds\_ratios.csv.
-  \item \textbf{Cut-off and confusion matrix:} at 0.5 almost nothing is predicted to leave (exit rate 7.5\%); at the Youden cut-off model B has sensitivity 0.40 and specificity 0.70 (14\_logistic\_confusion\_test.csv).
-  \item \textbf{Linearity of the logit (Box--Tidwell):} age passes (p = 0.79), so it enters as a straight-line term (rule fixed before fitting). Tenure shows curvature (p $<$ 0.001); it is used only in the two-predictor decision boundary (14.9), so mention it as a limit there (14\_logistic\_linearity.csv).
-  \item \textbf{code: 14.1--14.2 (county), 14.3 (specification), 14.4--14.9 (logistic).}
-\end{itemize}
+The linearity of the logit was checked with Box--Tidwell terms before the final model was fixed. Age passes the check ($p=0.79$) and enters as a straight-line term, whereas tenure shows curvature ($p<0.001$) and is used only in the two-predictor decision boundary, where this is stated as a limitation. The regression and model checks are implemented in sections 14.1--14.9 of the R script.
 
 \subsection{Extensions beyond the brief}
 
-\begin{figure}[H]
+Seven extensions deepen the answer without changing its direction. They are ordered below by section number (which differs from their extension number, because they build on one another).
+
+Extension~1 (section 15) builds a used-price index from repeat sales. There are 20,631 repeat-sale pairs on 17,088 cars. A repeat-sales index includes the effect of ageing, while a hedonic index holds age and mileage fixed; the hedonic index rises by 21\% in 2022 and falls by about 17\% in each of 2023 and 2024 (Figure~\ref{fig:priceindex}), and each year of age is associated with an 11.4\% lower real price.
+
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=6in,height=0.85\textheight,keepaspectratio]{15_01_used_price_index.png}
-\caption{Real used EV prices, change on the previous year (15\_01\_used\_price\_index.png)}
+\caption{Real used electric-vehicle prices, change on the previous year}
+\label{fig:priceindex}
 \end{figure}
 
-\begin{itemize}
-  \item \textbf{Used prices (ext. 1):} 20,631 repeat-sale pairs on 17,088 cars. The repeat-sales index includes ageing; the hedonic index holds age and mileage fixed: +21\% in 2022, about $-17\%$ in each of 2023 and 2024. Each year of age $\approx -11.4\%$ in real price. code: 15.1--15.7.
-\end{itemize}
+Extension~3 (section 16) examines county movement. In a year with a title transfer, 37.1\% of King County vehicles left the county, against 2.1\% in a year without a transfer (Figure~\ref{fig:moves}); a title transfer is therefore strongly associated with a move, although the records still cannot say where the vehicle went.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=6in,height=0.85\textheight,keepaspectratio]{16_01_king_moves.png}
-\caption{Vehicles moving into and out of King County (16\_01\_king\_moves.png)}
+\caption{Vehicles moving into and out of King County}
+\label{fig:moves}
 \end{figure}
 
-\begin{itemize}
-  \item \textbf{Movement (ext. 3):} in a year with a title transfer, 37.1\% of King vehicles left the county, against 2.1\% without one. code: section 16.
-\end{itemize}
+Extension~4 (section 17) follows cohorts by age. At age 5, 72\% of BEVs and 74\% of PHEVs are still in the records; at age 10 the shares are 53\% and 55\% (Figure~\ref{fig:survival}). A Cox model gives a PHEV hazard ratio of 0.92 over 2010--2023, but the ratio is 0.69--0.79 up to 2019 and 1.03 for 2021--2023, and a proportional-hazards check rejects the constant-hazard assumption ($p=0.024$). The cohort evidence therefore confirms the main conclusion: there is no difference in the current fleet, and the historical difference belongs to the earlier period.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=6in,height=0.85\textheight,keepaspectratio]{17_01_survival_by_type.png}
-\caption{Share of vehicles still in the records by age, BEV and PHEV (17\_01\_survival\_by\_type.png)}
+\caption{Share of vehicles still in the records by age, BEVs and PHEVs}
+\label{fig:survival}
 \end{figure}
 
-\begin{itemize}
-  \item \textbf{Survival (ext. 4):} at age 5, 72\% of BEVs and 74\% of PHEVs are still in the records; at age 10, 53\% and 55\%. Cox hazard ratio for PHEV 0.92 over 2010--2023, but only before 2020: by period it is 0.69--0.79 up to 2019 and 1.03 for 2021--2023; proportional-hazards check p = 0.024. So the main conclusion (no difference in the current fleet) holds. code: 17, 17.1.
-  \item \textbf{Electric range (ext. 5):} no evidence that range is associated with leaving (odds ratio 0.94 per 100 miles, p = 0.38; BEVs of model year 2020 or earlier). code: section 18.
-\end{itemize}
+Extension~5 (section 18) tests whether electric range predicts leaving. Among BEVs of model year 2020 or earlier, the odds ratio is 0.94 per 100 miles ($p=0.38$), so there is no evidence that range is associated with leaving. This is a useful negative result: the range of the vehicle does not explain retention in this population.
 
-\begin{figure}[H]
+Extension~2 (section 19) places the counts on a per-resident basis using Census county population. In 2025 the state had 33.8 vehicles per 1,000 residents, King County 57.2 and the rest of the state 24.0; San Juan County had the highest rate (66.2). King County holds 49.7\% of vehicles but only 29.3\% of residents (Figures~\ref{fig:percounty} and~\ref{fig:perking}).
+
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=6in,height=0.85\textheight,keepaspectratio]{19_01_ev_per_1000_2025.png}
-\caption{Plug-in vehicles per 1,000 residents by county, 2025 (19\_01\_ev\_per\_1000\_2025.png)}
+\caption{Plug-in vehicles per 1,000 residents by county, 2025}
+\label{fig:percounty}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=6in,height=0.85\textheight,keepaspectratio]{19_02_ev_per_1000_king_vs_rest.png}
-\caption{Vehicles per 1,000 residents, King and the rest of the state (19\_02\_ev\_per\_1000\_king\_vs\_rest.png)}
+\caption{Vehicles per 1,000 residents, King County and the rest of the state}
+\label{fig:perking}
 \end{figure}
 
-\begin{itemize}
-  \item \textbf{Per resident (ext. 2):} 33.8 per 1,000 in the state, 57.2 in King, 24.0 elsewhere (2025). San Juan County is highest (66.2). King has 49.7\% of vehicles and 29.3\% of residents. code: 19.
-\end{itemize}
+Extension~6 (section 20) projects the population to 2028 with the stock-and-flow identity. Entries stay at their 2025 level in the primary (Level) scenario, with the exit rate, return rate and entry volatility estimated from the recent past and propagated through 10,000 simulated paths. The central projection is about 444,000 active vehicles in 2028, with a 95\% interval of 331,000 to 714,000; the Trend scenario, in which entries keep their average growth, gives about 593,000 (Figure~\ref{fig:projection}). A backtest that cuts the data at 2022 is within 1\% of the actual 2023 count with actual entries, but 30\% low in 2025 with projected entries, because entries jumped in 2023; the actual counts nevertheless remain inside the 80\% intervals. January--September 2026 entries are 11.8\% below the same months of 2025. The projection assumes constant rates, and it has only one backtest origin, so it should be updated with later extracts.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=6in,height=0.85\textheight,keepaspectratio]{20_01_projection.png}
-\caption{Projected active vehicles to 2028, with 80\% and 95\% intervals (20\_01\_projection.png)}
+\caption{Active vehicles projected to 2028, with 80\% and 95\% intervals}
+\label{fig:projection}
 \end{figure}
 
-\begin{itemize}
-  \item \textbf{Projection (ext. 6):} about 444,000 active vehicles in 2028 (95\% interval 331,000--714,000); high scenario about 593,000. Backtest from 2022: within 1\% with actual entries, 30\% low with projected entries (entries jumped in 2023), yet inside the 80\% interval. January--September 2026 entries are 11.8\% below 2025. Limits: rates held constant; one backtest origin. code: 20.1--20.4.
-\end{itemize}
+Extension~7 (section 21) looks at legislative districts and utility territories, the geography that planners actually use. The five largest districts held 31\% of vehicles in 2019 and 26\% in 2025; districts 41, 45 and 48 have about 89--102 vehicles per 1,000 residents, while district 15 has about 5 (Figure~\ref{fig:districts}). The Puget Sound Energy, Seattle and Tacoma territories hold 73\% of vehicles, so charging demand and grid planning are concentrated in a small number of service areas. The district and utility analyses are in sections 21.1--21.4 of the R script.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=6in,height=0.85\textheight,keepaspectratio]{21_01_districts_per_1000.png}
-\caption{Vehicles per 1,000 residents by legislative district (21\_01\_districts\_per\_1000.png)}
+\caption{Vehicles per 1,000 residents by legislative district}
+\label{fig:districts}
 \end{figure}
 
-\begin{itemize}
-  \item \textbf{Districts and utilities (ext. 7):} the five largest districts held 31\% of vehicles in 2019 and 26\% in 2025; districts 41, 45 and 48 have about 89--102 per 1,000 residents, district 15 about 5. Puget Sound Energy, Seattle and Tacoma territories hold 73\% of vehicles. code: 21.1--21.4.
-\end{itemize}
+\FloatBarrier
 
 \section{Actionable Conclusion and Insight}
 
 \subsection{Key findings}
 
-\begin{itemize}
-  \item The population grew about five-fold from 2019 to 2025 (52,710 $\rightarrow$ 270,098) and is ageing (mean age 2.6 $\rightarrow$ 3.0 years).
-  \item It is spreading: King's share fell 5.5 points, Eastern counties caught up on BEV share, and the top-five districts' share fell from 31\% to 26\%.
-  \item Which vehicles stay: in the current fleet, BEVs and PHEVs leave at the same rate once age is taken into account (PHEVs stayed longer only before 2020); range shows no association. Leaving is associated with prior transfers, use class and region, and is hard to predict (AUC 0.57).
-  \item About 7--7.5\% of active vehicles leave the records within two years (6.9\% from 2019, 7.5\% from 2023).
-\end{itemize}
+The population grew about five-fold between 2019 and 2025, from 52,710 to 270,098 active vehicles, and it aged at the same time: mean age rose from 2.58 to 3.05 years. The gap-filled count (54,733 in 2019 and 286,478 in 2025) shows that the growth is not an artefact of missing records, and the stock-and-flow identity and benchmark checks make the counts trustworthy.
+
+The fleet also spread out. King County's share fell 5.5 percentage points, eastern counties caught up on BEV share, and the share held by the five largest legislative districts fell from 31\% to 26\%. King County still has 49.7\% of the vehicles and 29.3\% of the residents, so the concentration remains substantial even as it declines.
+
+Which vehicles stay is now clearer. In the current fleet, BEVs and PHEVs leave at the same rate once age is taken into account (odds ratio 1.03, $p=0.26$); the historical difference in favour of PHEVs belongs to the period before 2020, and range shows no association with leaving. Leaving is associated with prior transfers, use class and region, but it is hard to predict (test AUC 0.57), because the reasons a vehicle leaves---moving out of state, an accident, a sale to another state---are not in the records.
+
+About 7--7.5\% of active vehicles leave the records within two years (6.9\% from the 2019 baseline and 7.5\% from 2023). This is the attrition rate that a stock-and-flow forecast should use, and it is low enough that entries, not exits, dominate the growth of the fleet.
 
 \subsection{Practical value}
 
-\begin{itemize}
-  \item \textbf{Planners and utilities:}
-  \begin{itemize}
-    \item charging and grid demand is concentrated (districts 41, 45, 48; 73\% of vehicles in three utility territories), but growth is now faster outside King --- plan new capacity there too.
-    \item the projection (about 444,000 vehicles in 2028, with a wide interval) gives a range for load planning; update it each year as the 2026 check shows entries can shift quickly.
-    \item per-resident rates (district 15 $\approx$ 5 per 1,000 vs 102 in district 41) identify under-served areas.
-  \end{itemize}
-  \item \textbf{State revenue and fleets:}
-  \begin{itemize}
-    \item EV registration fees depend on the active stock, not on sales: the stock-and-flow method (entries, a 7--7.5\% two-year exit rate, returns) is a transparent way to forecast that base.
-    \item the end of the sales-tax exemption (July 2025) coincides with lower 2026 entries ($-11.8\%$); revenue planning should not assume the 2023--2025 entry level continues.
-    \item fleet managers: BEVs and PHEVs now stay equally long, and used prices fall about 11\% per year of age --- useful for replacement and resale planning.
-  \end{itemize}
-  \item \textbf{Policy:}
-  \begin{itemize}
-    \item monitor equity: rural and eastern areas still have far fewer vehicles per resident.
-    \item the records cannot say why a vehicle leaves; recording out-of-state transfers versus vehicles taken off the road would make retention measurable and models far stronger.
-    \item publish population counts with the rules used (duplicates, exempt classes, two-year exit rule), because simple county sums double-count vehicles that move.
-  \end{itemize}
-\end{itemize}
+\textbf{Planners and utilities.} Charging and grid demand is concentrated in a few districts and three utility territories, but growth is now faster outside King County, so new capacity should be planned there as well. The projection gives a range for load planning---about 444,000 vehicles in 2028, with a wide interval---and should be updated each year, because the 2026 check shows that entries can shift quickly. Per-resident rates identify under-served areas: district 15 has about 5 vehicles per 1,000 residents against 102 in district 41.
+
+\textbf{State revenue and fleets.} Electric vehicle registration fees depend on the active stock, not on sales, and the stock-and-flow method (entries, a 7--7.5\% two-year exit rate, and returns) is a transparent way to forecast that base. The end of the sales-tax exemption in July 2025 coincides with 11.8\% lower entries in January--September 2026, so revenue planning should not assume that the 2023--2025 entry level continues. For fleet managers, BEVs and PHEVs now stay equally long, and used prices fall about 11\% per year of age, which is useful for replacement and resale planning.
+
+\textbf{Policy.} Equity should be monitored, because rural and eastern areas still have far fewer vehicles per resident. The records cannot say why a vehicle leaves; recording out-of-state transfers separately from vehicles taken off the road would make retention measurable and would strengthen the models considerably. Population counts should be published with the rules used (duplicates, exempt classes, two-year exit rule), because simple county sums double-count vehicles that move.
 
 \subsection{Limits and future research}
 
-\begin{itemize}
-  \item Associations, not causes; leaving is inferred from missing records; exits are only observable to 2023; 2025 is slightly provisional and 2026 partial.
-  \item The projection holds rates constant and has one backtest origin; re-run it with later extracts.
-  \item Future work: link with public charging-station data, out-of-state title transfers, and owner characteristics (not in this dataset).
-\end{itemize}
+The results are associations, not causes, and leaving is inferred from missing records. Exits are observable only to 2023, the 2025 count is slightly provisional, and 2026 is partial. The projection holds rates constant and has a single backtest origin. Future work could link the records with public charging-station data, out-of-state title transfers and owner characteristics, none of which are in this dataset. The assignment brief and marking rubric are reproduced at the end of this report.
+
+
+\FloatBarrier
 
 \label{LastMainPage}
-\includepdf[page=7-8]{../desc.pdf}
+\clearpage
+
+\pagestyle{empty}
+
+\phantomsection
+\addcontentsline{toc}{section}{Appendix}
+
+\includepdf[pages=7-8]{../desc.pdf}
 
 \end{document}

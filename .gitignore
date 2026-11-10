@@ -11,3 +11,12 @@ data/raw/Electric_Vehicle_Title_and_Registration_Activity.csv
 
 # Office lock files
 ~$*
+
+# LaTeX
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.toc
+*.xdv

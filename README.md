@@ -2,12 +2,20 @@
 
 DSC201 group project (XMUM). One R script, `analysis.R` (submitted as `StudentID.R`), analyses Washington State's electric vehicle title and registration records.
 
+**Topic and focus.** The brief (`desc.pdf`) offers an Electric Vehicle dataset with four possible focuses: Vehicle Specification, Performance, Population and Charging Patterns. This project takes **Population**, with Vehicle Specification in support.
+
 **Question:** how has Washington's plug-in vehicle population grown, aged and spread from 2010 to 2026, and which vehicles stay in it?
+
+That is the Population focus written as four parts: size over time (*grown*), vehicle age (*aged*), geography (*spread*) and retention (*which vehicles stay*).
+
+**Finishing the report or preparing slides? Start with [`REPORT_GUIDE.md`](REPORT_GUIDE.md).**
 
 ## What is in this repository
 
 | Path | Contents |
 |---|---|
+| `desc.pdf` | The assignment brief and marking rubric |
+| `REPORT_GUIDE.md` | Guide for finishing the report: what is done, what is left, where each rubric item is answered, Q&A preparation |
 | `analysis.R` | The whole analysis, in 21 numbered sections |
 | `outputs/tables/` | 98 CSV tables written by the script (plus `00_session_info.txt`) |
 | `outputs/figures/` | 41 PNG figures written by the script |

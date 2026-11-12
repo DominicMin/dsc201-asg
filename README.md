@@ -22,7 +22,7 @@ That is the Population focus written as four parts: size over time (*grown*), ve
 | `data/processed/` | Vehicle-year, vehicle-history and sale-event tables saved by the script (`.rds`) |
 | `data/raw/` | Small inputs: Census county population, CPI, source metadata and `PROVENANCE.txt`. The main 933 MB CSV is **not** here (see below) |
 | `report/report.tex` | Final report source: prose report with abstract and contribution table, TikZ pipeline diagrams, typeset tables and an appendix. Compile with `latexmk -xelatex` in `report/` |
-| `report/report.pdf` | Compiled report (cover, abstract with contribution table, contents, 35 numbered pages) |
+| `report/report.pdf` | Compiled report (cover, abstract with contribution table, contents, 36 numbered pages) |
 | `report/cover_page.pdf` | Signed cover page and own-work declaration (inserted by `report.tex`) |
 | `DECISIONS.md` | Every cleaning and analysis rule, with its reason, and the results log |
 | `METHODS_NOTES.md` | Plain-language explanation and a reference for each method |
@@ -73,7 +73,7 @@ To check a copy by hand on Windows: `certutil -hashfile data\raw\Electric_Vehicl
 |---|---|---|---|
 | 1 | **Size:** 270,098 active vehicles in 2025 (286,478 counting vehicles that skip one year), up from 54,733 in 2019 on the second count | 6, 11.1 | `06_population_flows.csv`, `11_01_active_population.png` |
 | 2 | **Spread:** King County's share of vehicles fell 5.5 points from 2019 to 2025 (95% CI 5.0–5.9, p ≈ 10⁻¹¹⁷) | 13.1 | `13_hypothesis_tests.csv`, `11_02_king_share.png` |
-| 3 | **Retention:** no difference between BEVs and PHEVs in leaving within two years from 2021 (odds ratio 1.03, p = 0.26). Across 2010–2023 PHEVs left slightly less often (Cox hazard ratio 0.92), but only before 2020 | 13.2, 17, 17.1 | `13_hypothesis_tests.csv`, `17_retention_by_period.csv` |
+| 3 | **Retention:** no significant difference between BEVs and PHEVs in leaving from the 2021 baseline after adjusting for age (odds ratio 1.03, p = 0.26). Across 2010–2023 PHEVs left slightly less often (Cox hazard ratio 0.92), but only before 2020 | 13.2, 17, 17.1 | `13_hypothesis_tests.csv`, `17_retention_by_period.csv` |
 | 4 | **Exit model:** test AUC 0.52 with the base predictors, 0.57 with vehicle history (DeLong p ≈ 10⁻⁷⁶). It stays weak, because the causes of leaving aren't in the records | 14.4–14.7 | `14_logistic_performance.csv`, `14_06_logistic_roc.png` |
 | 5 | **County growth by size (one-way ANOVA):** not significant (classic p = 0.074, chosen by the assumption checks; Welch 0.032 and Kruskal–Wallis 0.045 as sensitivity checks) | 13.10 | `13_anova_oneway_primary.csv`, `13_01_anova_growth_by_size.png` |
 | 6 | **BEV share over time (repeated-measures ANOVA):** rose at every step, from 56% (2019) to 74% (2025), averaged over counties (Greenhouse–Geisser p ≈ 10⁻¹⁴) | 13.12 | `13_anova_repeated_measures.csv`, `13_03_rm_anova_bev_share.png` |
@@ -87,8 +87,8 @@ To check a copy by hand on Windows: `certutil -hashfile data\raw\Electric_Vehicl
 | 14 | **Backtest:** with the actual entries, the projection is within 1% of the actual 2023–2025 counts. With projected entries it was 30% low in 2025 (entries jumped in 2023), yet the 80% intervals contained the actual counts | 20.3 | `20_projection_backtest.csv` |
 | 15 | **Early 2026:** January–September entries are 11.8% below the same months of 2025 | 20.4 | `20_check_2026_entries.csv` |
 | 16 | **Districts:** the five largest legislative districts' share fell from 31% to 26% (2019–2025); district 41 has about 102 vehicles per 1,000 residents, district 15 about 5 | 21.3 | `21_district_spread.csv`, `21_01_districts_per_1000.png` |
-| 17 | **Utility territories:** the Puget Sound Energy, Seattle and Tacoma territories hold 73% of vehicles | 21.4 | `21_utility_territories.csv` |
+| 17 | **Utility territories:** the three largest territory labels (Puget Sound Energy, Seattle and Tacoma) hold 73% of vehicles | 21.4 | `21_utility_territories.csv` |
 
 **Wording used throughout:** results are associations, not causes. A vehicle that "left the records" has no Washington record for two years; it may have moved out of state or gone off the road, and the records can't tell which.
 
-**Limits.** Exits can only be seen up to 2023 (two later years are needed). The 2025 count is slightly provisional, and 2026 is partial (to September). Records describe vehicles, not owners or charging.
+**Limits.** Exits can only be seen up to 2023 (two later years are needed). The 2025 gap-filled count and the 2024 leaver count are provisional, and 2026 is partial (to September). Records describe vehicles, not owners or charging.

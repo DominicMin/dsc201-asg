@@ -150,7 +150,7 @@ Several exact matches required the benchmark's own conventions, which the projec
 |---|---|
 | Size classes are thirds of the 2019 stock (13 counties each) | Equal groups, set by starting size |
 | One-way ANOVA: the primary test follows the assumption checks. Non-normal residuals (Shapiro p < 0.05) → Kruskal–Wallis; normal but unequal variances (Levene p < 0.05) → Welch; both pass → classic ANOVA. The other two are sensitivity checks | Set in the code before the p-values are compared, so it would switch automatically if the data changed |
-| Two-way ANOVA uses size class and side of the Cascades (King counts as Western) | Only two sides, so cells keep at least 2 counties. Sums of squares are sequential, so the result is exploratory |
+| Two-way ANOVA uses size class and side of the Cascades (King counts as Western) | Only two sides, so cells keep at least 2 counties. Sums of squares are sequential and size and side are confounded, so the main effects depend on the order of entry and only the interaction is interpreted |
 | Repeated-measures and mixed ANOVA use the 35 counties with 10+ vehicles in 2019 | The same rule as the paired t-test |
 
 **Regression**
@@ -191,10 +191,10 @@ Several exact matches required the benchmark's own conventions, which the projec
 
 ### Main tests
 
-There are seven test families. The two main tests are the headline results, and the rest support them. A Bonferroni threshold (0.05 / 7) is in `13_hypothesis_tests.csv`.
+There are nine main and supporting tests, plus sensitivity versions. The two main tests are the headline results, and the rest support them. A Bonferroni threshold (0.05 / 9) is in `13_hypothesis_tests.csv`.
 
 - **Spread:** King's share fell 5.5 points from 2019 to 2025 (95% CI 5.0 to 5.9, p < 0.001). Gap-filled counts give 5.4 points. Cohen's h is −0.11, a small effect. Many vehicles appear in both years, so the two groups are not independent.
-- **Retention: no evidence of a difference in the current fleet.** Adjusted for age, at the 2021 baseline, the PHEV odds ratio is 1.03 (0.97 to 1.10, p = 0.26). The 2019 baseline gives 0.90 (p = 0.005) and 2023 gives 0.97 (p = 0.14). The full logistic model, which also adjusts for make, region, transfers and use, gives 0.81, mostly from comparisons within makes.
+- **Retention: no significant difference in the recent fleet.** Adjusted for age, at the 2021 baseline, the PHEV odds ratio is 1.03 (0.97 to 1.10, p = 0.26). The 2019 baseline gives 0.90 (p = 0.005) and 2023 gives 0.97 (p = 0.14). The full logistic model, which also adjusts for make, region, transfers and use, gives 0.81, mostly from comparisons within makes.
 
 ### Retention: logistic test and Cox model (17.1)
 
@@ -206,9 +206,9 @@ The Cox model (hazard ratio 0.92, p ≈ 3 × 10⁻¹¹) and the main logistic te
 | 2019 | 0.90 (p = 0.005) | — |
 | 2020 onwards | 1.02, 1.03, 1.01, 0.97 (2020–2023 baselines, all p > 0.14) | 1.04 (2019–2021), 1.03 (2021–2023, p = 0.09) |
 
-- PHEVs left less often than BEVs up to about 2019; since 2020 there is no difference. The all-years Cox ratio of 0.92 averages the two periods. The proportional-hazards check agrees that the PHEV effect is not constant (Schoenfeld test p = 0.024, `17_cox_ph_check.csv`).
+- PHEVs left less often than BEVs up to about 2019; since 2020 there is no significant difference. The all-years Cox ratio of 0.92 averages the two periods. The proportional-hazards check agrees that the PHEV effect is not constant (Schoenfeld test p = 0.024, `17_cox_ph_check.csv`).
 - The logistic test at the 2021 baseline remains the pre-specified test of H0; the period split explains the difference and does not replace it.
-- **Result:** no difference in leaving within two years from 2021 (OR 1.03, p = 0.26). Across 2010–2023 PHEVs left slightly less often (Cox HR 0.92), but only before 2020.
+- **Result:** no significant difference in leaving from the 2021 baseline (OR 1.03, p = 0.26). Across 2010–2023 PHEVs left slightly less often (Cox HR 0.92), but only before 2020.
 
 ### Supporting tests
 
@@ -221,7 +221,7 @@ The Cox model (hazard ratio 0.92, p ≈ 3 × 10⁻¹¹) and the main logistic te
 
 ### Probability and distributions
 
-- **Weekly entries:** Poisson is far too narrow (dispersion 9,627; its 95% band covers 37% of weeks). Negative binomial fits much better (AIC 9,571 against 39,696; its band covers 95% of weeks), although some overdispersion remains (4.4). Observed zero weeks: 39. Expected: 38 under negative binomial, 45 under Poisson.
+- **Weekly entries:** Poisson is far too narrow (its 95% band covers 37% of weeks). Negative binomial fits much better (AIC 9,571 against 39,696; its band covers 95% of weeks), although some overdispersion remains (4.4). Observed zero weeks: 39. Expected: 38 under negative binomial, 45 under Poisson.
 - **Binomial:** the model-year 2013 cohort had 400 exits among 4,843 vehicles, against 332 expected. With a continuity correction, the normal approximation's error falls from 0.083 at n = 10 to 0.007 at n = 1,000.
 - **Geometric:** fits all cars pooled (p = 0.21), **but not within any model-year cohort** (all p < 0.001). Mixing cohorts observed for different lengths of time produces a geometric-looking total.
 - **Central limit theorem:** the SD of sample means matches σ/√n at every n, and their skewness falls from 0.51 (n = 5) to 0.02 (n = 500), although the population's skewness is 1.32.
@@ -229,7 +229,7 @@ The Cox model (hazard ratio 0.92, p ≈ 3 × 10⁻¹¹) and the main logistic te
 ### ANOVA
 
 - **One-way, growth by size class: not significant at 5%.** Levene p = 0.56 and Shapiro p = 0.075, so the classic ANOVA is primary: F = 2.80, p = 0.074, η² = 0.13. Sensitivity checks: Welch p = 0.032 and Kruskal–Wallis p = 0.045. No Tukey pair is significant (Large against Small p = 0.11). This is weak evidence that large counties grew less, consistent with the weak regression slope (`13_anova_oneway_primary.csv`).
-- **Two-way:** the size × side interaction is p = 0.018, but cells hold 2 to 10 counties, so it is exploratory.
+- **Two-way:** the size × side interaction is p = 0.018, but cells hold 2 to 11 counties, so it is exploratory. The main effects depend on the order of entry (size first: size p = 0.044; side first: side p = 0.013), because 11 of the 13 large counties are western.
 - **Repeated measures, BEV share in 2019, 2022 and 2025:** the mean across 35 counties rose at every step. Sphericity fails (Mauchly p < 0.001), so the Greenhouse–Geisser correction is applied (ε = 0.60): p = 1 × 10⁻¹⁴, partial η² = 0.78. Friedman agrees, and all three Bonferroni pairs differ.
 - **Mixed:** the year × side interaction is p = 0.002. Eastern counties started lower (mean BEV share 51% against 61% in 2019) and closed most of the gap by 2025 (73% against 75%). The side difference averaged over years is not significant (p = 0.075).
 

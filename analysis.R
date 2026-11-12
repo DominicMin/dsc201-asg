@@ -799,9 +799,9 @@ comma <- function(x) format(round(x), big.mark = ",", trim = TRUE)
 table_png <- function(dt, name, title, note = SOURCE_NOTE) {
   d <- as.data.frame(dt)
   d[] <- lapply(d, function(x) if (is.numeric(x)) {
-    if (all(x == round(x), na.rm = TRUE)) comma(x)
-    else fifelse(is.na(x), "NA", fifelse(abs(x) >= 100, comma(x), formatC(x, format = "f",
-        digits = 2)))
+    if (all(x == round(x), na.rm = TRUE)) fifelse(is.na(x), "\u2013", comma(x))
+    else fifelse(is.na(x), "\u2013", fifelse(abs(x) >= 100, comma(x), formatC(x, format = "f",
+        digits = if (all(abs(x * 10 - round(x * 10)) < 1e-9, na.rm = TRUE)) 1 else 2)))
   } else as.character(x))
   w <- pmax(nchar(names(d)), vapply(d, function(x) max(nchar(x)), 0)) + 3
   x_mid <- cumsum(w) - w / 2
@@ -819,7 +819,7 @@ table_png <- function(dt, name, title, note = SOURCE_NOTE) {
           plot.title = element_text(face = "bold", size = 11),
           plot.caption = element_text(colour = INK2, size = 7, hjust = 0), plot.margin = margin(8,
               14, 8, 8))
-  fig(p, name, w = max(4.5, sum(w) * 0.085, nchar(title) * 0.085 + 0.5),
+  fig(p, name, w = max(4.5, sum(w) * 0.085, nchar(title) * 0.1 + 0.5, nchar(note) * 0.055 + 0.5),
       h = 0.9 + 0.24 * (nrow(d) + 1))
 }
 
@@ -870,7 +870,8 @@ route_tab <- history[entry_year <= LAST_FULL, .N, keyby = .(entry_year, entry_ro
 route_wide <- dcast(route_tab, entry_year ~ entry_route, value.var = "N", fill = 0)
 setnames(route_wide, "entry_year", "Entry year")
 out(route_wide, "10_freq_entry_routes.csv")
-table_png(route_wide, "10_04_table_entry_routes.png",
+table_png(copy(route_wide)[, `Entry year` := as.character(`Entry year`)],
+          "10_04_table_entry_routes.png",
           "Vehicles entering the population, by entry route")
 
 # 10.3 County measures. Starting values are 2019, the baseline of the spread test.
@@ -916,7 +917,9 @@ descriptives <- rbindlist(list(
 num_cols <- setdiff(names(descriptives)[vapply(descriptives, is.numeric, TRUE)], "n")
 descriptives[, (num_cols) := lapply(.SD, function(x) signif(x, 5)), .SDcols = num_cols]
 out(descriptives, "10_descriptives.csv")
-table_png(descriptives[, .(measure, unit, n, mean, median, mode, sd, iqr, skewness, kurtosis)],
+table_png(descriptives[, .(Measure = measure, Unit = unit, n, Mean = mean, Median = median,
+                           Mode = mode, SD = sd, IQR = iqr, Skewness = skewness,
+                           Kurtosis = kurtosis)],
           "10_05_table_descriptives.png",
           "Descriptive statistics (mode of continuous measures uses rounded values)")
 
@@ -1018,7 +1021,8 @@ p <- ggplot(mk, aes(N, reorder(make, N))) + geom_col(fill = COL1, width = 0.7) +
   geom_text(aes(label = comma(N)), hjust = -0.1, size = 3, colour = INK) +
   scale_x_continuous(labels = scales::comma, expand = expansion(mult = c(0, 0.12))) +
   labs(title = "Ten largest makes in the 2025 active population", x = "Active vehicles", y = NULL,
-       caption = cap_n(comma(nrow(act25))))
+       caption = cap_n(comma(nrow(act25)))) +
+  theme(plot.margin = margin(5.5, 20, 5.5, 5.5))
 fig(p, "11_05_top_makes_2025.png")
 
 # 11.6 BEV and PHEV share, 2025.
@@ -1032,7 +1036,7 @@ p <- ggplot(pie, aes(x = "", y = N, fill = ev_type)) + geom_col(width = 1, colou
   labs(title = "BEV and PHEV share of active vehicles, 2025", x = NULL, y = NULL,
        caption = cap_n(comma(nrow(act25)))) +
   theme(axis.text = element_blank(), panel.grid = element_blank(), legend.position = "none")
-fig(p, "11_06_type_share_2025.png", w = 5.5, h = 5)
+fig(p, "11_06_type_share_2025.png", w = 7, h = 5)
 
 # 11.7 Vehicle age, 2025.
 p <- ggplot(act25, aes(age)) + geom_histogram(binwidth = 1, fill = COL1, colour = SURFACE) +
@@ -1066,7 +1070,8 @@ fig(p, "11_09_age_by_year_boxplot.png")
 p <- ggplot(county_tab, aes(region, growth)) +
   geom_boxplot(data = county_tab[region != "King"], fill = "#cde2fb", colour = COL1, width = 0.5,
                outlier.shape = NA) +
-  geom_jitter(width = 0.08, height = 0, size = 1.6, colour = INK2) +
+  geom_jitter(data = county_tab[region != "King"], width = 0.08, height = 0, size = 1.6,
+              colour = INK2) +
   geom_point(data = county_tab[region == "King"], colour = COL2, size = 3) +
   labs(title = "County growth in active vehicles, 2019-2025, by region",
        subtitle = "Log growth: log(2025 stock / 2019 stock); points are counties",
@@ -1646,6 +1651,7 @@ p1 <- ggplot(county_tab, aes(fitted, resid)) + geom_hline(yintercept = 0, colour
     linewidth = 0.3) +
   geom_point(colour = COL1, size = 1.8) + geom_text(data = county_tab[cooks > 4 / .N],
       aes(label = county), size = 2.8, vjust = -0.8) +
+  scale_y_continuous(expand = expansion(mult = c(0.05, 0.12))) +
   labs(title = "Residuals against fitted values", x = "Fitted log growth", y = "Residual")
 p2 <- ggplot(county_tab, aes(sample = std_resid)) + stat_qq(colour = COL1, size = 1.5) +
   stat_qq_line(colour = COL2) +

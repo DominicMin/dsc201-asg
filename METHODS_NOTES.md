@@ -40,7 +40,7 @@ One short entry per method beyond the basics, in `analysis.R` section order. Eac
 
 ### Poisson against negative binomial for weekly counts
 - **What:** both model counts. The negative binomial adds a parameter, so the variance can exceed the mean.
-- **Why here:** weekly new-vehicle entries are far more variable than Poisson allows (dispersion about 9,600). The Poisson 95% band covers only 37% of weeks, and the negative binomial band covers 95%.
+- **Why here:** weekly new-vehicle entries are far more variable than Poisson allows. The Poisson 95% band covers only 37% of weeks, and the negative binomial band covers 95%.
 - **In plain words:** "Poisson assumes cars arrive like raindrops, evenly at random. They actually arrive in bursts, and the negative binomial allows for bursts."
 - **Study:** Cameron & Trivedi (2013), *Regression Analysis of Count Data*, 2nd ed., Cambridge University Press, chapters 3–4. Hilbe (2011), *Negative Binomial Regression*, 2nd ed., Cambridge University Press.
 
@@ -104,7 +104,7 @@ One short entry per method beyond the basics, in `analysis.R` section order. Eac
 
 ### Two-way ANOVA and interaction (course Chapter 8)
 - **What:** it tests size class, side of the Cascades and their interaction.
-- **Why here:** smaller counties might grow faster on one side only. The cells hold 2 to 10 counties, so the result is exploratory.
+- **Why here:** smaller counties might grow faster on one side only. The cells hold 2 to 11 counties, so the result is exploratory. Size and side are confounded (most large counties are western), so with sequential sums of squares the main effects change with the order of entry; only the interaction is interpreted.
 - **In plain words:** "Does the size effect depend on which side of the mountains you're on?"
 - **Study:** Field, Miles & Field (2012), chapter 12. Kutner, Nachtsheim, Neter & Li (2005), *Applied Linear Statistical Models*, 5th ed., McGraw-Hill, chapter 19.
 
@@ -126,7 +126,7 @@ One short entry per method beyond the basics, in `analysis.R` section order. Eac
 
 ### Cook's distance, the squared-term check and VIF (course Chapter 9)
 - **What:** Cook's distance flags influential points (above 4/n). A squared term tests for curvature. VIF measures overlap between predictors.
-- **Why here:** with 39 counties, a few tiny counties could drive the line, so the results are shown with and without King.
+- **Why here:** with 39 counties, a few tiny counties could drive the line. The four most influential counties are the smallest ones (Wahkiakum, Garfield, Columbia, Adams), not King; results are also shown without King.
 - **In plain words:** "Would the answer change much if this one county were removed?"
 - **Study:** Kutner et al. (2005), chapters 10 and 14.
 
@@ -211,8 +211,8 @@ One short entry per method beyond the basics, in `analysis.R` section order. Eac
 - **Why here:** used arrivals would otherwise make survival look better than it is.
 - **In plain words:** "Of cars that reached age 5, how many reached 6? Chain those steps together."
 - **Study:** Kaplan & Meier (1958), *JASA* 53, 457–481. Klein & Moeschberger (2003), *Survival Analysis*, 2nd ed., Springer, chapter 4 (left truncation).
-- **Check:** the Cox model assumes the PHEV effect is the same at every age (proportional hazards). `cox.zph` tests this with Schoenfeld residuals; p = 0.024 says the effect varies. Splitting by calendar period shows why: PHEVs left less often before 2020 and at the same rate since. So the pooled hazard ratio is an average over two eras.
-- **In plain words:** "The all-years model blends an old fleet, where plug-in hybrids stayed longer, with today's, where they don't."
+- **Check:** the Cox model assumes the PHEV effect is the same at every age (proportional hazards). `cox.zph` tests this with Schoenfeld residuals; p = 0.024 says the effect varies. Splitting by calendar period shows why: PHEVs left less often before 2020, with no significant difference since. So the pooled hazard ratio is an average over two eras.
+- **In plain words:** "The all-years model blends an old fleet, where plug-in hybrids stayed longer, with today's, where no clear difference remains."
 - **Study:** Grambsch & Therneau (1994), *Biometrika* 81, 515–526 (the residual test). Therneau & Grambsch (2000), *Modeling Survival Data*, Springer, chapter 6.
 
 ### EVs per 1,000 residents
